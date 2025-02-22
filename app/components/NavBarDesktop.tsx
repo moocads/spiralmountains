@@ -19,7 +19,7 @@ export default function NavBarDesktop() {
       </Link>
 
       {/* 导航链接 */}
-      <div className="mt-12">
+      <div className="mt-20">
         <NavLinks />
       </div>
     </nav>

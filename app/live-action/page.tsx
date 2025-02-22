@@ -12,7 +12,7 @@ const projects = [
     id: 1,
     title: "Burt's bees",
     thumbnail: "/images/layer1.png",
-    videoUrl: "/videos/burt_bee_with_sub.mp4",
+    videoUrl: "https://mooc-cms-new-mooc.s3.ca-central-1.amazonaws.com/burt_s_bee_15s_with_sub_b4bb85aab2.mp4",
     credits: {
       screenwriter: "John Smith",
       director: "John Smith",
@@ -64,7 +64,7 @@ const projects = [
     id: 5,
     title: "Nike Running Campaign",
     thumbnail: "/images/Layer5.png",
-    videoUrl: "https://example.com/video5.mp4",
+    videoUrl: "https://mooc-cms-new-mooc.s3.ca-central-1.amazonaws.com/Chalo_Fresh_Co_2024_Valuelicious_d66d3c23d7.mp4",
     credits: {
       screenwriter: "Mark Thompson",
       director: "Rachel Kim",
@@ -305,13 +305,13 @@ export default function LiveAction() {
           <Button
             variant="ghost"
             size="lg"
-            style={{ borderRadius: 0 }}
-            className="absolute left-0 top-0 z-10 p-8 text-black bg-yellow hover:text-black"
+
+            className="absolute left-0 top-0 z-10 p-8 text-black bg-yellow hover:text-black rounded-br-lg"
             onClick={() => setSelectedProject(null)}
           >
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center ">
               <X className="h-6 w-6" />
-              <span className="text-lg mt-1 font-bold">BACK</span>
+              <span className="text-lg mt-1 font-bold font-[AvenirNextMedium]">BACK</span>
             </div>
           </Button>
 
@@ -321,19 +321,16 @@ export default function LiveAction() {
               isFadingOut ? "opacity-0" : "opacity-100"
             }`}
           >
-            <div className="absolute top-0 right-0 w-5/6">
+            <div className="absolute md:top-0 top-20 right-0 md:w-5/6 w-full">
               <VideoPlayer
                 key={selectedProject.videoUrl}
                 src={selectedProject.videoUrl}
                 poster={selectedProject.thumbnail}
               />
-            </div>
-          </div>
-
-          {/* 底部文字信息 */}
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-8">
+                {/* 底部文字信息 */}
+          <div className="relative bottom-0 left-0 bg-gradient-to-t from-black to-transparent md:p-0 p-8 text-left">
             <h2 className="text-3xl font-bold text-white">{selectedProject.title}</h2>
-            <div className="mt-4 grid grid-cols-2 gap-8 text-lg text-white/70 md:grid-cols-4">
+            <div className="mt-4 grid grid-cols-2 gap-8 text-lg text-white/70 md:grid-cols-3">
               <div>
                 <p className="font-normal text-white">
                   <span className="font-bold">Screenwriter:</span>{" "}
@@ -359,23 +356,29 @@ export default function LiveAction() {
             </div>
           </div>
 
-          {/* 右下角 Prev / Next 按钮 */}
-          <div className="absolute bottom-8 right-8 flex gap-4">
+                 {/* 右下角 Prev / Next 按钮 */}
+                 <div className="md:relative flex gap-4 fixed justify-evenly bottom-0 right-0 left-0">
             <Button
               onClick={handlePrevious}
-              className="h-12 w-36 rounded-full bg-white text-black flex items-center justify-center gap-2 hover:bg-gray-200"
+              className="h-12 w-36 rounded-[10px] bg-yellow-500 text-black flex text-lg items-center justify-center gap-2 hover:bg-yellow-400 font-[AvenirNextMedium]"
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft className="h-3 w-3" />
               Previous
             </Button>
             <Button
               onClick={handleNext}
-              className="h-12 w-36 rounded-full bg-yellow-500 text-black flex items-center justify-center gap-2 hover:bg-yellow-400"
+              className="h-12 w-36 rounded-[10px] bg-yellow-500 text-black flex text-lg items-center justify-center gap-2 hover:bg-yellow-400 font-[AvenirNextMedium]"
             >
               Next
               <ChevronRight className="h-5 w-5" />
             </Button>
           </div>
+            </div>
+          </div>
+
+        
+
+   
         </section>
       )}
     </>
