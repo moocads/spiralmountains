@@ -11,74 +11,79 @@ const projects = [
   {
     id: 1,
     title: "Burt's bees",
-    thumbnail:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-21%20at%202.40.17%E2%80%AFAM-3YvLGrWcSK28m2qklDlEQPu2ZxAmYB.png",
-    videoUrl: "https://mooc-cms-new-mooc.s3.ca-central-1.amazonaws.com/burt%E2%80%98s+bee+15s_with+sub.mp4",
+    thumbnail: "/images/layer1.png",
+    videoUrl: "/videos/burt_bee_with_sub.mp4",
     credits: {
       screenwriter: "John Smith",
       director: "John Smith",
       photography: "John Smith",
       creativeDirector: "John Smith",
+      Actor: ["Vivian Hu", "Richard Will"],
     },
   },
   {
     id: 2,
     title: "OLG 2024 CNY Commercial",
-    thumbnail: "/placeholder.svg?height=338&width=600",
-    videoUrl: "https://example.com/video2.mp4",
+    thumbnail: "/images/Layer2.png",
+    videoUrl: "https://mooc-cms-new-mooc.s3.ca-central-1.amazonaws.com/2024_OLG_CNY_commercial_8de09cc156.mp4",
     credits: {
       screenwriter: "Sarah Johnson",
       director: "Michael Chen",
       photography: "David Wong",
       creativeDirector: "Emily Liu",
+      Actor: ["Vivian Hu", "Richard Will"],
     },
   },
   {
     id: 3,
-    title: "Audi Event Opening",
-    thumbnail: "/placeholder.svg?height=338&width=600",
-    videoUrl: "https://example.com/video3.mp4",
+    title: "Bingz Commercial",
+    thumbnail: "/images/Layer6.jpg",
+    videoUrl: "https://mooc-cms-new-mooc.s3.ca-central-1.amazonaws.com/Bingz_2024_fries_commercial_33aaf9b530.mp4",
     credits: {
       screenwriter: "James Wilson",
       director: "Robert Davis",
       photography: "Thomas Brown",
       creativeDirector: "Anna Martinez",
+      Actor: ["Vivian Hu", "Richard Will"],
     },
   },
   {
     id: 4,
     title: "OLG 2024 CNY Commercial - 2",
-    thumbnail: "/placeholder.svg?height=338&width=600",
+    thumbnail: "/images/Layer4.png",
     videoUrl: "https://example.com/video4.mp4",
     credits: {
       screenwriter: "Lisa Chen",
       director: "Kevin Wang",
       photography: "Chris Zhang",
       creativeDirector: "Michelle Lee",
+      Actor: ["Vivian Hu"],
     },
   },
   {
     id: 5,
     title: "Nike Running Campaign",
-    thumbnail: "/placeholder.svg?height=338&width=600",
+    thumbnail: "/images/Layer5.png",
     videoUrl: "https://example.com/video5.mp4",
     credits: {
       screenwriter: "Mark Thompson",
       director: "Rachel Kim",
       photography: "Steven Park",
       creativeDirector: "Jessica Wu",
+      Actor: ["Vivian Hu", "Richard Will"],
     },
   },
   {
     id: 6,
     title: "Apple Product Launch",
-    thumbnail: "/placeholder.svg?height=338&width=600",
+    thumbnail: "/images/Layer3.png",
     videoUrl: "https://example.com/video6.mp4",
     credits: {
       screenwriter: "Daniel Lee",
       director: "Sophie Anderson",
       photography: "Peter Chang",
       creativeDirector: "Grace Wang",
+      Actor: ["Vivian Hu", "Richard Will"],
     },
   },
   {
@@ -91,6 +96,7 @@ const projects = [
       director: "William Chen",
       photography: "Jennifer Liu",
       creativeDirector: "Michael Zhang",
+      Actor: ["Vivian Hu", "Richard Will", "Mike Dickson"],
     },
   },
   {
@@ -103,6 +109,7 @@ const projects = [
       director: "David Kim",
       photography: "Andrew Lee",
       creativeDirector: "Sarah Chen",
+      Actor: ["Vivian Hu", "Richard Will", "Mike Dickson"],
     },
   },
   {
@@ -115,6 +122,7 @@ const projects = [
       director: "Linda Wang",
       photography: "Tony Zhang",
       creativeDirector: "Helen Liu",
+      Actor: ["Vivian Hu", "Richard Will"],
     },
   },
   {
@@ -127,32 +135,84 @@ const projects = [
       director: "Karen Chen",
       photography: "Mike Johnson",
       creativeDirector: "Lucy Zhang",
+      Actor: ["Vivian Hu", "Richard Will"],
     },
   },
 ]
 
-const PROJECTS_PER_PAGE = 4
+const PROJECTS_PER_PAGE = 6
 
 export default function LiveAction() {
+  // 当前点击后弹窗显示的项目
   const [selectedProject, setSelectedProject] = useState<(typeof projects)[0] | null>(null)
   const [visibleProjects, setVisibleProjects] = useState(PROJECTS_PER_PAGE)
 
+  // 淡出淡入控制
+  const [isFadingOut, setIsFadingOut] = useState(false)
+
+  // 预览状态记录：key=项目id，value=是否在预览中
+  const [previewStates, setPreviewStates] = useState<{ [id: number]: boolean }>({})
+
+  // 开始预览：视频播放5秒后自动恢复到缩略图
+  const startPreview = (id: number) => {
+    setPreviewStates((prev) => ({ ...prev, [id]: true }))
+    setTimeout(() => {
+      setPreviewStates((prev) => ({ ...prev, [id]: false }))
+    }, 10000)
+  }
+
+  // 停止预览
+  const stopPreview = (id: number) => {
+    setPreviewStates((prev) => ({ ...prev, [id]: false }))
+  }
+
+  // 点击缩略图的逻辑：
+  // 如果当前没在预览，则开始预览；
+  // 如果已经在预览，则打开弹窗。
+  const handleThumbnailClick = (project: (typeof projects)[0]) => {
+    const isPlaying = previewStates[project.id]
+    if (!isPlaying) {
+      startPreview(project.id)
+    } else {
+      // 第二次点击：打开弹窗
+      setSelectedProject(project)
+    }
+  }
+
+  const handleMouseEnter = (project: (typeof projects)[0]) => {
+    // 桌面 hover 时自动预览
+    startPreview(project.id)
+  }
+
+  const handleMouseLeave = (project: (typeof projects)[0]) => {
+    stopPreview(project.id)
+  }
+
+  // 弹窗里上下切换项目
   const handleProjectClick = (project: (typeof projects)[0]) => {
     setSelectedProject(project)
   }
 
   const handlePrevious = () => {
     if (!selectedProject) return
-    const currentIndex = projects.findIndex((p) => p.id === selectedProject.id)
-    const previousIndex = (currentIndex - 1 + projects.length) % projects.length
-    setSelectedProject(projects[previousIndex])
+    setIsFadingOut(true)
+    setTimeout(() => {
+      const currentIndex = projects.findIndex((p) => p.id === selectedProject.id)
+      const previousIndex = (currentIndex - 1 + projects.length) % projects.length
+      setSelectedProject(projects[previousIndex])
+      setIsFadingOut(false)
+    }, 300)
   }
 
   const handleNext = () => {
     if (!selectedProject) return
-    const currentIndex = projects.findIndex((p) => p.id === selectedProject.id)
-    const nextIndex = (currentIndex + 1) % projects.length
-    setSelectedProject(projects[nextIndex])
+    setIsFadingOut(true)
+    setTimeout(() => {
+      const currentIndex = projects.findIndex((p) => p.id === selectedProject.id)
+      const nextIndex = (currentIndex + 1) % projects.length
+      setSelectedProject(projects[nextIndex])
+      setIsFadingOut(false)
+    }, 300)
   }
 
   const handleViewMore = () => {
@@ -162,97 +222,158 @@ export default function LiveAction() {
   return (
     <>
       {/* Projects Grid */}
-      <section className="relative z-10 bg-black px-8 py-16">
-        <div className="mb-12 flex items-center">
-          <div className="h-8 w-2 bg-yellow-400" />
-          <h2 className="ml-4 text-2xl font-bold text-white">Live Action</h2>
-        </div>
+      <section className="relative z-10 bg-black px-8 py-12">
+      <div className="mb-8 flex justify-left">
+  <div className="inline-flex flex-col items-center w-fit">
+    {/* 上方斜纹 */}
+    <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
+    
+    {/* 中间文字 */}
+    <h2 className="my-2 px-4 text-4xl font-bold text-yellow-400 whitespace-nowrap w-full text-center">
+      Our Works
+    </h2>
+    
+    {/* 下方斜纹 */}
+    <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
+  </div>
+</div>
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          {projects.slice(0, visibleProjects).map((project) => (
-            <div
-              key={project.id}
-              className="group relative cursor-pointer overflow-hidden"
-              onClick={() => handleProjectClick(project)}
-            >
-              <div className="aspect-video overflow-hidden">
-                <Image
-                  src={project.thumbnail || "/placeholder.svg"}
-                  alt={project.title}
-                  width={600}
-                  height={338}
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
+
+
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 md:grid-cols-2">
+          {projects.slice(0, visibleProjects).map((project) => {
+            const isPreviewPlaying = previewStates[project.id] || false
+            return (
+              <div
+                key={project.id}
+                className="group relative cursor-pointer overflow-hidden"
+                // 移动端第一次点击 => 开始预览，第二次点击 => 打开详情
+                onClick={() => handleThumbnailClick(project)}
+                // 桌面端悬停 => 自动预览
+                onMouseEnter={() => handleMouseEnter(project)}
+                onMouseLeave={() => handleMouseLeave(project)}
+              >
+             <div className="relative aspect-video overflow-hidden rounded-3xl group-hover:border-[3px] group-hover:border-yellow-400 ">
+  {/* 缩略图始终作为背景显示 */}
+  <Image
+    src={project.thumbnail || "/placeholder.svg"}
+    alt={project.title}
+    width={600}
+    height={338}
+    className="object-cover transition-all duration-300"
+  />
+  {/* 视频层：绝对定位覆盖，带透明度过渡 */}
+  {project.videoUrl && (
+    <div
+      className={`absolute inset-0 transition-opacity duration-300 ${
+        isPreviewPlaying ? "opacity-100" : "opacity-0"
+      }`}
+    >
+      <video
+        src={project.videoUrl}
+        muted
+        autoPlay
+        playsInline
+        className="object-cover transition-transform duration-300 group-hover:scale-105"
+      />
+    </div>
+  )}
+</div>
+
+                <div className="inset-0 bg-black/60 p-4 transition-opacity duration-300 group-hover:opacity-100">
+                  <h3 className="text-l font-bold text-white">{project.title}</h3>
+                </div>
               </div>
-              <div className="absolute inset-0 bg-black/60 p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <h3 className="text-xl font-bold text-white">{project.title}</h3>
-              </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
 
         {/* View More Button */}
         {visibleProjects < projects.length && (
-          <div className="mt-12 flex justify-center">
-            <Button variant="outline" className="border-white/20 text-white hover:bg-white/20" onClick={handleViewMore}>
+          <div className="mt-3 flex justify-left">
+            <Button variant="outline" className="view-more" onClick={handleViewMore}>
               View More
             </Button>
           </div>
         )}
       </section>
 
-      {/* Project Viewer */}
+      {/* Project Viewer (弹窗) */}
       {selectedProject && (
         <section className="fixed inset-0 z-50 bg-black">
+          {/* 左上角 BACK 按钮 */}
           <Button
             variant="ghost"
-            size="icon"
-            className="absolute right-4 top-4 z-10 text-white/70 hover:text-white"
+            size="lg"
+            style={{ borderRadius: 0 }}
+            className="absolute left-0 top-0 z-10 p-8 text-black bg-yellow hover:text-black"
             onClick={() => setSelectedProject(null)}
           >
-            <X className="h-6 w-6" />
+            <div className="flex flex-col items-center">
+              <X className="h-6 w-6" />
+              <span className="text-lg mt-1 font-bold">BACK</span>
+            </div>
           </Button>
 
-          <VideoPlayer src={selectedProject.videoUrl} poster={selectedProject.thumbnail} />
+          {/* 视频淡入淡出 */}
+          <div
+            className={`transition-opacity duration-300 ${
+              isFadingOut ? "opacity-0" : "opacity-100"
+            }`}
+          >
+            <div className="absolute top-0 right-0 w-5/6">
+              <VideoPlayer
+                key={selectedProject.videoUrl}
+                src={selectedProject.videoUrl}
+                poster={selectedProject.thumbnail}
+              />
+            </div>
+          </div>
 
+          {/* 底部文字信息 */}
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-8">
-            <h2 className="text-2xl font-bold text-white">{selectedProject.title}</h2>
-            <div className="mt-4 grid grid-cols-2 gap-8 text-sm text-white/70 md:grid-cols-4">
+            <h2 className="text-3xl font-bold text-white">{selectedProject.title}</h2>
+            <div className="mt-4 grid grid-cols-2 gap-8 text-lg text-white/70 md:grid-cols-4">
               <div>
-                <p className="font-medium">Screenwriter</p>
-                <p>{selectedProject.credits.screenwriter}</p>
+                <p className="font-normal text-white">
+                  <span className="font-bold">Screenwriter:</span>{" "}
+                  {selectedProject.credits.screenwriter}
+                </p>
+                <p className="font-medium text-white">
+                  Director: {selectedProject.credits.director}
+                </p>
               </div>
               <div>
-                <p className="font-medium">Director</p>
-                <p>{selectedProject.credits.director}</p>
+                <p className="font-medium text-white">
+                  Photography: {selectedProject.credits.photography}
+                </p>
+                <p className="font-medium text-white">
+                  Creative Director: {selectedProject.credits.creativeDirector}
+                </p>
               </div>
               <div>
-                <p className="font-medium">Photography</p>
-                <p>{selectedProject.credits.photography}</p>
-              </div>
-              <div>
-                <p className="font-medium">Creative Director</p>
-                <p>{selectedProject.credits.creativeDirector}</p>
+                <p className="font-medium text-white">
+                  Actors: {selectedProject.credits.Actor?.join(", ")}
+                </p>
               </div>
             </div>
           </div>
 
+          {/* 右下角 Prev / Next 按钮 */}
           <div className="absolute bottom-8 right-8 flex gap-4">
             <Button
-              size="icon"
-              variant="outline"
-              className="h-12 w-12 rounded-full border-white/20 text-white/70 hover:bg-white/20"
               onClick={handlePrevious}
+              className="h-12 w-36 rounded-full bg-white text-black flex items-center justify-center gap-2 hover:bg-gray-200"
             >
-              <ChevronLeft className="h-6 w-6" />
+              <ChevronLeft className="h-5 w-5" />
+              Previous
             </Button>
             <Button
-              size="icon"
-              variant="outline"
-              className="h-12 w-12 rounded-full border-white/20 text-white/70 hover:bg-white/20"
               onClick={handleNext}
+              className="h-12 w-36 rounded-full bg-yellow-500 text-black flex items-center justify-center gap-2 hover:bg-yellow-400"
             >
-              <ChevronRight className="h-6 w-6" />
+              Next
+              <ChevronRight className="h-5 w-5" />
             </Button>
           </div>
         </section>
@@ -260,4 +381,3 @@ export default function LiveAction() {
     </>
   )
 }
-

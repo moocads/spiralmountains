@@ -56,7 +56,7 @@ export function VideoPlayer({ src, poster }: VideoPlayerProps) {
   }
 
   return (
-    <div className="group relative aspect-video bg-black">
+    <div className="group relative aspect-video bg-black" onClick={togglePlay}>
       <video
         ref={videoRef}
         className="h-full w-full"
@@ -68,6 +68,20 @@ export function VideoPlayer({ src, poster }: VideoPlayerProps) {
         <source src={src} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
+
+      {!isPlaying && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <button
+            onClick={(e) => {
+              e.stopPropagation() // 阻止点击按钮后触发外层 onClick
+              togglePlay()
+            }}
+            className="flex items-center justify-center bg-black/50 p-4 rounded-full hover:bg-black/70"
+          >
+            <Play className="h-12 w-12 text-white" />
+          </button>
+        </div>
+      )}
 
       {/* Video Controls */}
       <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
