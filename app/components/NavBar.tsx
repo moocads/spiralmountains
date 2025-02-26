@@ -10,7 +10,7 @@ export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <nav className="bg-white border-b border-gray-200 p-4">
+    <nav className="bg-black border-b border-gray-200 p-4">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link href="/">

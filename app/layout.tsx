@@ -7,6 +7,9 @@ import NavBarMobile from "@/app/components/NavBarMobile"
 export const metadata: Metadata = {
   title: "SMM",
   description: "SMM Portfolio",
+  icons:{
+    icon: '/favicon.ico'
+  }
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -22,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <NavBarDesktop />
 
         {/* 主体内容区：如果左侧是 64px 宽，可留出对应的 margin/padding */}
-        <main className="md:ml-64 m-px">
+        <main className="md:ml-64 md:p-[30px] m-px">
           {children}
         </main>
 

@@ -225,16 +225,13 @@ export default function LiveAction() {
       <section className="relative z-10 bg-black px-8 py-12">
       <div className="mb-8 flex justify-left">
   <div className="inline-flex flex-col items-center w-fit">
-    {/* 上方斜纹 */}
-    <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
-    
-    {/* 中间文字 */}
-    <h2 className="my-2 px-4 text-4xl font-bold text-yellow-400 whitespace-nowrap w-full text-center">
-      Our Works
-    </h2>
-    
-    {/* 下方斜纹 */}
-    <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
+
+  <h2 className="my-8 px-4 md:text-[120px] text-2xl font-['AvenirNextBold'] text-yellow-400 text-center uppercase mb-[-20px]">
+           Works
+          </h2>
+          <h2 className="absolute z-[-1] right-20 md:text-[200px] text-2xl font-['AvenirNextBold'] text-[#121212] text-center uppercase">
+           Works
+          </h2>
   </div>
 </div>
 
@@ -291,8 +288,19 @@ export default function LiveAction() {
         {/* View More Button */}
         {visibleProjects < projects.length && (
           <div className="mt-3 flex justify-left">
-            <Button variant="outline" className="view-more" onClick={handleViewMore}>
+            <Button variant="outline" className="border-[#ffffff] bg-transparent rounded-[30px] text-[20px] text-[#ffffff]" onClick={handleViewMore}>
               View More
+              <svg
+            className="w-6 h-6 animate-bounce ring-1 ring-gray-900/5"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            stroke="#ffffff"
+          >
+            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
             </Button>
           </div>
         )}

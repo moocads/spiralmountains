@@ -1,0 +1,260 @@
+"use client";
+
+import { useRef, useState } from "react";
+import Image from "next/image";
+
+const clients = [
+    { id: 1, clientName: "Burt's bees", logo: "/images/clients/burtsbees.png" },
+    { id: 2, clientName: "Audi", logo: "/images/clients/audi.png" },
+    { id: 3, clientName: "Concord", logo: "/images/clients/concord.png" },
+    { id: 4, clientName: "dodge", logo: "/images/clients/dodge.png" },
+    { id: 5, clientName: "evergreen-collage", logo: "/images/clients/evergreen-collage.png" },
+    { id: 6, clientName: "fullbright", logo: "/images/clients/fullbright.png" },
+    { id: 7, clientName: "gotrain", logo: "/images/clients/gotrain.png" },
+    { id: 8, clientName: "goubuli", logo: "/images/clients/goubuli.png" },
+    { id: 9, clientName: "gyugyuya", logo: "/images/clients/gyugyuya.png" },
+    { id: 10, clientName: "kingdom", logo: "/images/clients/kingdom.png" },
+    { id: 11, clientName: "metrolinx", logo: "/images/clients/metrolinx.png" },
+    { id: 12, clientName: "metrolinx", logo: "/images/clients/midea.png" },
+    { id: 13, clientName: "remax", logo: "/images/clients/remax.png" },
+    { id: 14, clientName: "sobeys", logo: "/images/clients/sobeys.png" },
+    { id: 15, clientName: "metrolinx", logo: "/images/clients/uoft.png" },
+  ];
+
+  const team = [
+    {
+      id: 1,
+      memberName: "Lili",
+      position: "General Manager",
+      photoUrl: "/images/team/Smm_crew_photo-5789.jpg",
+    },
+    {
+      id: 2,
+      memberName: "",
+      position: "",
+      photoUrl: "/images/team/Smm_crew_photo-5816.jpg",
+    },
+    {
+      id: 3,
+      memberName: "",
+      position: "",
+      photoUrl: "/images/team/Smm_crew_photo-5842.jpg",
+    },
+    {
+      id: 4,
+      memberName: "",
+      position: "",
+      photoUrl: "/images/team/Smm_crew_photo-5842.jpg",
+    },
+    {
+      id: 5,
+      memberName: "",
+      position: "",
+      photoUrl: "/images/team/Smm_crew_photo-5842.jpg",
+    },
+  ];
+
+export default function Page() {
+  // 这里我们只需要 4 个 section，就直接手动写 4 个 ref 即可
+  const sectionRefs = useRef<HTMLDivElement[]>([]);
+  // 当前所在 section 的索引
+  const [currentSection, setCurrentSection] = useState(0);
+  // 防止滚动过快的标识
+  const [scrolling, setScrolling] = useState(false);
+
+  // 滚动到指定的 section（平滑滚动）
+  const scrollToSection = (index: number) => {
+    sectionRefs.current[index]?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // 向下滚动
+  const handleNext = () => {
+    if (currentSection < 3) {
+      const next = currentSection + 1;
+      scrollToSection(next);
+      setCurrentSection(next);
+    }
+  };
+
+  // 向上滚动
+  const handlePrev = () => {
+    if (currentSection > 0) {
+      const prev = currentSection - 1;
+      scrollToSection(prev);
+      setCurrentSection(prev);
+    }
+  };
+
+  // 监听鼠标滚轮事件，做简单的防抖处理
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (scrolling) return;
+    setScrolling(true);
+    setTimeout(() => setScrolling(false), 800); // 0.8 秒防抖
+
+    if (e.deltaY > 0) {
+      handleNext();
+    } else if (e.deltaY < 0) {
+      handlePrev();
+    }
+  };
+
+  return (
+    <div onWheel={handleWheel}>
+      {/* Section 1 */}
+      <div
+        ref={(el) => (sectionRefs.current[0] = el!)}
+        className="h-screen flex flex-col items-center justify-center"
+      >
+        {/* 这里写你想要的内容，比如标题、文字、图片等等 */}
+        <div className="mb-12 w-full max-w-[60vw]">
+          <h2 className="my-2 px-4 md:text-8xl text-2xl font-['AvenirNextBold'] text-yellow-400 text-center uppercase">
+            About Us
+          </h2>
+        </div>
+        <div className="relative text-white w-full max-w-[60vw] mb-[80px] text-center">
+          <p>
+            Spiral Mountains Media is a video production and digital video marketing agency. We have a professional in-house production and marketing team. So, we can produce the right contents to fit your brand image and know how to stand out your brand.
+          </p>
+          <br />
+          <p>
+            We offer video marketing services for your brand starting or moving up. We help to build your audience by targeting media platforms or finding the right spots to promote your business. We do the analysis for your marketing campaigns and make your next placement more accurate.
+          </p>
+        </div>
+      </div>
+
+      {/* Section 2 */}
+      <div
+        ref={(el) => (sectionRefs.current[1] = el!)}
+        className="h-screen flex flex-col items-center justify-center "
+      >
+        {/* 在这里放你的第二个 Section 的自定义内容 */}
+      
+          <div className="flex-col items-center w-fit">
+            <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
+            <h2 className="my-2 px-4 md:text-4xl text-2xl font-bold text-yellow-400 whitespace-nowrap text-center uppercase">
+              Clients We Have Served
+            </h2>
+            <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
+          </div>
+      
+        <div className="relative text-white bg-white/70 block mt-12 md:w-[60vw] w-full rounded-lg">
+          <div className="grid md:grid-cols-4 grid-cols-3 gap-0 justify-items-center">
+            {clients.map((client) => (
+              <div key={client.id} className="border-x border-y border-white/10 rounded-lg transition delay-150 duration-700 hover:bg-[#d4b435]">
+                <Image
+                  src={client.logo || "/placeholder.svg"}
+                  alt={client.clientName}
+                  width={600}
+                  height={338}
+                  className="mix-blend-difference transition delay-250 duration-700 hover:mix-blend-normal"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Section 3 */}
+      <div
+        ref={(el) => (sectionRefs.current[2] = el!)}
+        className="h-screen flex items-center justify-center"
+      >
+              <section
+        id="section-3"
+        className="snap-start h-screen flex flex-col justify-center items-center"
+      >
+        <div className="mb-12 flex justify-center">
+          <div className="inline-flex flex-col items-center w-fit">
+            <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
+            <h2 className="my-2 px-4 md:text-4xl text-2xl font-bold text-yellow-400 whitespace-nowrap text-center uppercase">
+              Our Team
+            </h2>
+            <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
+          </div>
+        </div>
+        <div className="relative text-white block md:w-[60vw] w-full mb-[80px] rounded-lg">
+          <div className="grid md:grid-cols-5 grid-cols-2 gap-4 justify-items-center">
+            {team.map((teamMember) => (
+              <div key={teamMember.id} className="relative border-x border-y border-white/10 rounded-lg">
+                <Image
+                  src={teamMember.photoUrl || "/placeholder.svg"}
+                  alt={teamMember.memberName}
+                  width={600}
+                  height={338}
+                  className="group-hover:scale-105 hover:bg-yellow-400 rounded-lg"
+                />
+                <div
+                  className="absolute bottom-0 mix-blend-multiply p-[15px]"
+                  style={{
+                    background: "linear-gradient(202deg, #FFF 27.95%, #A0A0A0 53.47%, #353535 88.48%)",
+                    width: "100%",
+                    height: "350px",
+                  }}
+                ></div>
+                <div className="absolute bottom-[20px] mx-auto w-fit text-center left-0 right-0">
+                  <p className="font-[AvenirNextMedium]">{teamMember.position}</p>
+                  <p>{teamMember.memberName}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </section>
+      </div>
+
+      {/* Section 4 */}
+      <div
+        ref={(el) => (sectionRefs.current[3] = el!)}
+        className="h-screen flex flex-col items-center justify-center "
+      >
+        {/* 在这里放你的第四个 Section 的自定义内容 */}
+        <div className="mb-6 flex justify-center">
+          <div className="inline-flex flex-col items-center w-fit">
+            <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
+            <h2 className="my-2 px-4 md:text-4xl text-2xl font-bold text-yellow-400 whitespace-nowrap text-center uppercase">
+              WE'RE GREAT LISTENERS,<br />SO WHY NOT HAVE A CHAT?
+            </h2>
+            <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
+          </div>
+        </div>
+        <p className="relative text-white block  w-[60vw] mb-[20px] text-center">
+          Let's get introduced on a quick call to learn about your team's marketing objectives and how we can help!
+        </p>
+      
+          <div className="w-[60vw]">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2878.079684189491!2d-79.3302568!3d43.8334457!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4d498250c3baf%3A0xbfea9faa70542c8c!2sSPIRAL%20MOUNTAINS%20MEDIA!5e0!3m2!1sen!2sca!4v1740121218244!5m2!1sen!2sca"
+              width="100%"
+              height="450"
+              loading="lazy"
+              className="rounded-[30px]"
+            ></iframe>
+          </div>
+          {/* <div className="inline-flex flex justify-center p-4 text-white">
+            <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
+            <p className="mb-2">Address: 532 Hood Rd, Markham, ON L3R 3K9</p>
+            <p className="mb-2">Phone: +1-647-886-7225</p>
+            <p className="mb-2">Email: info@example.com</p>
+          </div> */}
+      
+      </div>
+
+      {/* 固定在右下角的按钮，点击后滚动到下一个 Section */}
+ 
+      <button onClick={handleNext} className="cursor-pointer fixed bottom-10 right-10 focus:outline-none mt-4">
+          <svg
+            className="w-6 h-6 text-yellow-400 animate-bounce ring-1 ring-gray-900/5"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            stroke="#facc15"
+          >
+            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
+        </button>
+    </div>
+  );
+}
