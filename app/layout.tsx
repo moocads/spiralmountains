@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <NavBarDesktop />
 
         {/* 主体内容区：如果左侧是 64px 宽，可留出对应的 margin/padding */}
-        <main className="md:ml-64 md:p-[30px] m-px">
+        <main className="overflow-hidden">
           {children}
         </main>
 
