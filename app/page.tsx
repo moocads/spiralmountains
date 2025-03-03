@@ -15,7 +15,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative h-screen overflow-hidden w-full">
+    <main className="relative flex flex-col items-center h-screen overflow-hidden w-full">
       {/* Video Background */}
       <video
         ref={videoRef}

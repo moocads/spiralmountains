@@ -222,7 +222,7 @@ export default function LiveAction() {
   return (
     <>
       {/* Projects Grid */}
-      <section className="relative z-10 bg-black px-8 py-12">
+      <section className="relative z-10 bg-black px-8 py-12 ">
       <div className="mb-8 flex justify-left">
   <div className="inline-flex flex-col items-center w-fit">
 
