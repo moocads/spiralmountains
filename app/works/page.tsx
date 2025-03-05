@@ -214,7 +214,7 @@ export default function Works() {
 
       {/* Project Viewer (弹窗) */}
       {selectedProject && (
-        <section className="fixed inset-0 z-50 bg-black">
+        <section className="fixed inset-0 z-s50 bg-black">
           {/* 左上角 BACK 按钮 */}
           <Button
             variant="ghost"
@@ -235,7 +235,7 @@ export default function Works() {
               isFadingOut ? "opacity-0" : "opacity-100"
             }`}
           >
-            <div className="absolute md:top-0 top-20 right-0 md:w-5/6 w-full">
+            <div className="absolute md:top-0 top-40 right-0 md:w-5/6 w-full">
               <VideoPlayer
                 key={selectedProject.Video?.url}
                 src={selectedProject.Video?.url}
@@ -254,17 +254,17 @@ export default function Works() {
           </div>
 
                  {/* 右下角 Prev / Next 按钮 */}
-                 <div className="md:relative mt-[20px] flex gap-4 fixed bottom-0 left-0">
+                 <div className="md:relative mt-[20px] flex gap-4 fixed bottom-[10px] right-0 left-0">
             <Button
               onClick={handlePrevious}
-              className="bg-[url(/images/prev.png)] bg-no-repeat bg-contain w-[100px]"
+              className="bg-[url(/images/prev.png)] bg-no-repeat md:bg-contain  bg-cover h-[82px] md:w-[100px] flex-1"
             >
               {/* <ChevronLeft className="h-3 w-3" />
               Previous */}
             </Button>
             <Button
               onClick={handleNext}
-              className="bg-[url(/images/next.png)] bg-no-repeat bg-contain w-[100px]"
+              className="bg-[url(/images/next.png)] bg-no-repeat md:bg-contain bg-cover h-[82px] md:w-[100px] flex-1"
             >
               {/* Next
               <ChevronRight className="h-5 w-5" /> */}

@@ -75,12 +75,7 @@ export default function NavBarMobile() {
           </Link>
         </div>
       </div>
-      <div className="bg-yellow p-[0px] fixed bottom-0 w-full left-0 grid grid-cols-3 gap-0 text-center rounded-t-[30px]">
-        <div className="bg-yellow border border-black vertical-middle p-6 text-[18px] rounded-tl-[15px]">
-          <a href="mailto:contact@spiralmountains.media">Contact</a></div>
-        <div className="bg-yellow border border-black p-6 text-[18px]">Works</div>
-        <div className="bg-yellow border border-black p-6 text-[18px] rounded-tr-[15px]">About</div>
-      </div>
+
     </nav>
   )
 }
