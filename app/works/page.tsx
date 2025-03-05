@@ -214,18 +214,18 @@ export default function Works() {
 
       {/* Project Viewer (弹窗) */}
       {selectedProject && (
-        <section className="fixed inset-0 z-s50 bg-black">
+        <section className="fixed inset-0 z-20 bg-black">
           {/* 左上角 BACK 按钮 */}
           <Button
             variant="ghost"
             size="lg"
 
-            className="absolute left-0 top-0 z-10 p-8 text-black bg-yellow hover:text-black rounded-br-lg"
+            className="absolute left-0 md:top-0 top-40 z-10 md:p-8 p-4 text-black bg-yellow hover:text-black rounded-br-lg"
             onClick={() => setSelectedProject(null)}
           >
-            <div className="flex flex-col items-center ">
+            <div className="flex md:flex-col items-center ">
               <X className="h-6 w-6" />
-              <span className="text-lg mt-1 font-bold font-[AvenirNextMedium]">BACK</span>
+              <span className="md:text-lg text-sm md:mt-1 margin-0 font-bold font-[AvenirNextMedium]">BACK</span>
             </div>
           </Button>
 
@@ -235,7 +235,7 @@ export default function Works() {
               isFadingOut ? "opacity-0" : "opacity-100"
             }`}
           >
-            <div className="absolute md:top-0 top-40 right-0 md:w-5/6 w-full">
+            <div className="absolute md:top-0 md:top-40 top-60 right-0 md:w-5/6 w-full">
               <VideoPlayer
                 key={selectedProject.Video?.url}
                 src={selectedProject.Video?.url}
