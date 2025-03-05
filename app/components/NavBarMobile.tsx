@@ -62,14 +62,14 @@ export default function NavBarMobile() {
           <Link
             href="/works"
             onClick={() => setMenuOpen(false)} // 点击后收起
-            className="block text-black hover:text-yellow-400"
+            className="block text-white hover:text-yellow-400"
           >
             Works
           </Link>
           <Link
             href="/about"
             onClick={() => setMenuOpen(false)}
-            className="block text-black hover:text-yellow-400"
+            className="block text-white hover:text-yellow-400"
           >
             About
           </Link>

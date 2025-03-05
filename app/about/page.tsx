@@ -6,9 +6,14 @@ import Image from "next/image";
 // Add this interface for type safety
 interface TeamMember {
   id: number;
-  name: string;
-  role: string;
-  photoUrl: string;
+  Name: string;
+  Position: string;
+  Photo_01: {
+    url: string;
+  };
+  Photo_02: {  // Add second photo
+    url: string;
+  };
 }
 
 interface ClientData {
@@ -104,6 +109,9 @@ export default function About() {
     }
   };
 
+  // Add state to track hover state for each team member
+  const [hoveredMember, setHoveredMember] = useState<number | null>(null);
+
   return (
     <div onWheel={handleWheel}>
       {loading ? (
@@ -187,16 +195,23 @@ export default function About() {
               <div className="relative text-white block md:w-[60vw] w-full mb-[80px] p-2 rounded-lg">
                 <div className="grid md:grid-cols-4 grid-cols-2 gap-4 justify-items-center">
                   {team.map((teamMember) => (
-                    <div key={teamMember.id} className="relative border-x border-y border-white/10 rounded-lg">
+                    <div 
+                      key={teamMember.id} 
+                      className="relative rounded-lg group "
+                      onMouseEnter={() => setHoveredMember(teamMember.id)}
+                      onMouseLeave={() => setHoveredMember(null)}
+                    >
                       <Image
-                        src={teamMember.Photo_01.url || "/placeholder.svg"}
-                        alt='Spiral Mountain Media'
+                        src={hoveredMember === teamMember.id && teamMember.Photo_02?.url 
+                          ? teamMember.Photo_02.url 
+                          : teamMember.Photo_01?.url || "/placeholder.svg"}
+                        alt={teamMember.Name || 'Team Member'}
                         width={600}
                         height={338}
-                        className="group-hover:scale-105 hover:bg-yellow-400 rounded-lg"
+                        className="rounded-lg transition-all transform border-yellow-400 group-hover:scale-105 group-hover:border-yellow-400"
                       />
                       <div
-                        className="absolute bottom-0 mix-blend-multiply p-[15px]"
+                        className="absolute bottom-0 rounded-lg mix-blend-multiply transition-all p-[15px] group-hover:scale-105 hover:border-yellow-400 "
                         style={{
                           background: "linear-gradient(202deg, #FFF 27.95%, #A0A0A0 53.47%, #353535 88.48%)",
                           width: "100%",
@@ -243,7 +258,7 @@ export default function About() {
                   className="rounded-[30px]"
                 ></iframe>
               </div>
-              {/* <div className="inline-flex flex justify-center p-4 text-white">
+              {/* <div className="inline-flex flex flex justify-center p-4 text-white">
                 <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
                 <p className="mb-2">Address: 532 Hood Rd, Markham, ON L3R 3K9</p>
                 <p className="mb-2">Phone: +1-647-886-7225</p>
