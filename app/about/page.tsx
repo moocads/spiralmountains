@@ -215,7 +215,7 @@ export default function About() {
                         style={{
                           background: "linear-gradient(202deg, #FFF 27.95%, #A0A0A0 53.47%, #353535 88.48%)",
                           width: "100%",
-                          height: "350px",
+                          height: "100%",
                         }}
                       ></div>
                       <div className="absolute bottom-[20px] mx-auto w-fit text-center left-0 right-0">
