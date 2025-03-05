@@ -25,7 +25,7 @@ export default function NavBarMobile() {
         {/* 菜单折叠按钮 */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="p-2 text-gray-500 hover:bg-gray-100 rounded-md"
+          className="p-2 text-yellow-400 hover:border hover:border-yellow-400 rounded-md"
         >
           {menuOpen ? (
             <X className="w-6 h-6" />
@@ -34,7 +34,7 @@ export default function NavBarMobile() {
             <svg
               className="w-6 h-6"
               fill="none"
-              stroke="currentColor"
+              stroke="#facc15"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >

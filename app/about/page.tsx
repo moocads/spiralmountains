@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link"
+import Link from "next/link";
 
 // Add this interface for type safety
 interface TeamMember {
@@ -283,7 +283,7 @@ export default function About() {
                 <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
               </svg>
             </button>
-            <div className="bg-yellow p-[0px] fixed bottom-0 w-full left-0 grid grid-cols-2 gap-0 text-center rounded-t-[30px]">
+            <div className="md:hidden bg-yellow p-[0px] fixed bottom-0 w-full left-0 grid grid-cols-2 gap-0 text-center rounded-t-[30px]">
         <div className="bg-yellow border border-black vertical-middle p-6 text-[18px] rounded-tl-[15px]">
           <a href="mailto:contact@spiralmountains.media">Contact</a></div>
         <div className="bg-yellow border border-black p-6 text-[18px] rounded-tr-[15px]"> <Link href="/works">Works</Link></div>
