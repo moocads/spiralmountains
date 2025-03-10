@@ -13,6 +13,7 @@ interface Project {
   ProjectName: string;
   Display: boolean;
   description: string | null;
+  ListOrder: number | null; // 允许为 null
   FeatureImage: {
     url: string;
   };
@@ -21,20 +22,13 @@ interface Project {
   };
 }
 
-
 export default function Works() {
   const PROJECTS_PER_PAGE = 6; 
-  // 当前点击后弹窗显示的项目
   const [selectedProject, setSelectedProject] = useState<(typeof projects)[0] | null>(null)
   const [visibleProjects, setVisibleProjects] = useState(PROJECTS_PER_PAGE)
-
-  // 淡出淡入控制
   const [isFadingOut, setIsFadingOut] = useState(false)
-
-  // 预览状态记录：key=项目id，value=是否在预览中
   const [previewStates, setPreviewStates] = useState<{ [id: number]: boolean }>({})
 
-  // 开始预览：视频播放5秒后自动恢复到缩略图
   const startPreview = (id: number) => {
     setPreviewStates((prev) => ({ ...prev, [id]: true }))
     setTimeout(() => {
@@ -42,26 +36,20 @@ export default function Works() {
     }, 10000)
   }
 
-  // 停止预览
   const stopPreview = (id: number) => {
     setPreviewStates((prev) => ({ ...prev, [id]: false }))
   }
 
-  // 点击缩略图的逻辑：
-  // 如果当前没在预览，则开始预览；
-  // 如果已经在预览，则打开弹窗。
   const handleThumbnailClick = (project: (typeof projects)[0]) => {
     const isPlaying = previewStates[project.id]
     if (!isPlaying) {
       startPreview(project.id)
     } else {
-      // 第二次点击：打开弹窗
       setSelectedProject(project)
     }
   }
 
   const handleMouseEnter = (project: (typeof projects)[0]) => {
-    // 桌面 hover 时自动预览
     startPreview(project.id)
   }
 
@@ -69,7 +57,6 @@ export default function Works() {
     stopPreview(project.id)
   }
 
-  // 弹窗里上下切换项目
   const handleProjectClick = (project: (typeof projects)[0]) => {
     setSelectedProject(project)
   }
@@ -77,7 +64,6 @@ export default function Works() {
   const handlePrevious = () => {
     if (!selectedProject) return
     setIsFadingOut(true)
-    
     setTimeout(() => {
       const currentIndex = projects.findIndex((p) => p.id === selectedProject.id)
       const previousIndex = (currentIndex - 1 + projects.length) % projects.length
@@ -112,7 +98,14 @@ export default function Works() {
           throw new Error('Failed to fetch projects');
         }
         const data = await response.json();
-        setProjects(data.data || []);
+        const projectsData: Project[] = data.data || [];
+        // 根据 listorder 排序，null 的排在最后
+        projectsData.sort((a, b) => {
+          const aValue = a.ListOrder === null ? Infinity : a.ListOrder;
+          const bValue = b.ListOrder === null ? Infinity : b.ListOrder;
+          return aValue - bValue;
+        });
+        setProjects(projectsData);
       } catch (error) {
         console.error('Error fetching projects:', error);
         setProjects([]);
@@ -126,21 +119,17 @@ export default function Works() {
 
   return (
     <>
-      {/* Projects Grid */}
       <section className="relative z-10 bg-black px-8 py-12 ">
-      <div className="mb-8 flex justify-left">
-  <div className="inline-flex flex-col items-center w-fit">
-
-  <h2 className="my-8 px-4 md:text-[120px] text-2xl font-['AvenirNextBold'] text-yellow-400 text-center uppercase mb-[-20px]">
-           Works
-          </h2>
-          <h2 className="absolute z-[-1] right-20 md:text-[200px] text-2xl font-['AvenirNextBold'] text-[#121212] text-center uppercase">
-           Works
-          </h2>
-  </div>
-</div>
-
-
+        <div className="mb-8 flex justify-left">
+          <div className="inline-flex flex-col items-center w-fit">
+            <h2 className="my-8 px-4 md:text-[120px] text-2xl font-['AvenirNextBold'] text-yellow-400 text-center uppercase mb-[-20px]">
+              Works
+            </h2>
+            <h2 className="absolute z-[-1] right-20 md:text-[200px] text-2xl font-['AvenirNextBold'] text-[#121212] text-center uppercase">
+              Works
+            </h2>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 md:grid-cols-2">
           {projects.slice(0, visibleProjects).map((project) => {
@@ -149,39 +138,34 @@ export default function Works() {
               <div
                 key={project.id}
                 className="group relative cursor-pointer overflow-hidden"
-                // 移动端第一次点击 => 开始预览，第二次点击 => 打开详情
                 onClick={() => handleThumbnailClick(project)}
-                // 桌面端悬停 => 自动预览
                 onMouseEnter={() => handleMouseEnter(project)}
                 onMouseLeave={() => handleMouseLeave(project)}
               >
-             <div className="relative aspect-video overflow-hidden rounded-3xl group-hover:border-[3px] group-hover:border-yellow-400 ">
-  {/* 缩略图始终作为背景显示 */}
-  <Image
-    src={project.FeatureImage?.url || "/placeholder.svg"}
-    alt={project.ProjectName}
-    width={600}
-    height={338}
-    className="object-cover transition-all duration-300"
-  />
-  {/* 视频层：绝对定位覆盖，带透明度过渡 */}
-  {project.Video?.url && (
-    <div
-      className={`absolute inset-0 transition-opacity duration-300 ${
-        isPreviewPlaying ? "opacity-100" : "opacity-0"
-      }`}
-    >
-      <video
-        src={project.Video.url}
-        muted
-        autoPlay
-        playsInline
-        className="object-cover transition-transform duration-300 group-hover:scale-105"
-      />
-    </div>
-  )}
-</div>
-
+                <div className="relative aspect-video overflow-hidden rounded-3xl group-hover:border-[3px] group-hover:border-yellow-400 ">
+                  <Image
+                    src={project.FeatureImage?.url || "/placeholder.svg"}
+                    alt={project.ProjectName}
+                    width={600}
+                    height={338}
+                    className="object-cover transition-all duration-300"
+                  />
+                  {project.Video?.url && (
+                    <div
+                      className={`absolute inset-0 transition-opacity duration-300 ${
+                        isPreviewPlaying ? "opacity-100" : "opacity-0"
+                      }`}
+                    >
+                      <video
+                        src={project.Video.url}
+                        muted
+                        autoPlay
+                        playsInline
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
+                  )}
+                </div>
                 <div className="inset-0 bg-black/60 p-4 transition-opacity duration-300 group-hover:opacity-100">
                   <h3 className="text-l font-bold text-white">{project.ProjectName}</h3>
                 </div>
@@ -190,36 +174,20 @@ export default function Works() {
           })}
         </div>
 
-        {/* View More Button */}
         {visibleProjects < projects.length && (
           <div className="mt-3 flex justify-left">
-            <Button  className="bg-[url(/images/view-more-btn.png)] bg-no-repeat bg-contain w-[150px]" onClick={handleViewMore}>
-              {/* View More
-              <svg
-            className="w-6 h-6 animate-bounce ring-1 ring-gray-900/5"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            stroke="#ffffff"
-          >
-            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg> */}
-          {/* <img src="/images/view-more-btn.png" width={150} /> */}
+            <Button className="bg-[url(/images/view-more-btn.png)] bg-no-repeat bg-contain w-[150px]" onClick={handleViewMore}>
+             
             </Button>
           </div>
         )}
       </section>
 
-      {/* Project Viewer (弹窗) */}
       {selectedProject && (
-        <section className="fixed inset-0 z-20 bg-black">
-          {/* 左上角 BACK 按钮 */}
+        <section className="absolute inset-0 z-20 bg-black">
           <Button
             variant="ghost"
             size="lg"
-
             className="absolute left-0 md:top-0 top-40 z-10 md:p-8 p-4 text-black bg-yellow hover:text-black rounded-br-lg"
             onClick={() => setSelectedProject(null)}
           >
@@ -229,53 +197,34 @@ export default function Works() {
             </div>
           </Button>
 
-          {/* 视频淡入淡出 */}
-          <div
-            className={`transition-opacity duration-300 ${
-              isFadingOut ? "opacity-0" : "opacity-100"
-            }`}
-          >
-            <div className="absolute md:top-0 md:top-40 top-60 right-0 md:w-5/6 w-full">
+          <div className={`transition-opacity duration-300 ${isFadingOut ? "opacity-0" : "opacity-100"}`}>
+            <div className="absolute md:top-0 top-40 right-0 md:w-5/6 w-full">
               <VideoPlayer
                 key={selectedProject.Video?.url}
                 src={selectedProject.Video?.url}
                 poster={selectedProject.FeatureImage?.url}
               />
-                {/* 底部文字信息 */}
-          <div className="relative bottom-0 left-0 bg-gradient-to-t from-black to-transparent md:p-0 p-8 text-left">
-            <h2 className="text-3xl font-bold pt-4 text-white">{selectedProject.ProjectName}</h2>
-            <div className="mt-4 grid grid-cols-2 gap-8 text-lg text-white/70 md:grid-cols-3">
-              <div>
-                <p className="font-normal text-white">
-                  {selectedProject.description || " "}
-                </p>
+              <div className="relative bottom-0 left-0 bg-gradient-to-t from-black to-transparent md:p-4 p-2 text-left">
+                <h2 className="text-2xl md:text-3xl font-bold text-white">{selectedProject.ProjectName}</h2>
+                <div className="mt-0 grid grid-cols-1 gap-8 text-lg text-white/70 ">
+                  <div>
+                    <p className="font-normal text-white ">
+                      {selectedProject.description || " "}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="md:relative md:text-left text-center mt-[20px] fixed bottom-[10px] right-0 left-0 bg-transparent">
+                <Button onClick={handlePrevious} className="bg-transparent">
+                  <img src="/images/prev.png" width="100px" alt="" />
+                </Button>
+                <Button onClick={handleNext} className="bg-transparent">
+                  <img src="/images/next.png" width="100px" alt="" />
+                </Button>
               </div>
             </div>
           </div>
-
-                 {/* 右下角 Prev / Next 按钮 */}
-                 <div className="md:relative mt-[20px] flex gap-4 fixed bottom-[10px] right-0 left-0">
-            <Button
-              onClick={handlePrevious}
-              className="bg-[url(/images/prev.png)] bg-no-repeat md:bg-contain  bg-cover h-[82px] md:w-[100px] flex-1"
-            >
-              {/* <ChevronLeft className="h-3 w-3" />
-              Previous */}
-            </Button>
-            <Button
-              onClick={handleNext}
-              className="bg-[url(/images/next.png)] bg-no-repeat md:bg-contain bg-cover h-[82px] md:w-[100px] flex-1"
-            >
-              {/* Next
-              <ChevronRight className="h-5 w-5" /> */}
-            </Button>
-          </div>
-            </div>
-          </div>
-
-        
-
-   
         </section>
       )}
     </>
