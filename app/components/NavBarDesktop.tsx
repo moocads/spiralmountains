@@ -25,11 +25,13 @@ export default function NavBarDesktop() {
 
       <div className="absolute border p-[15px] bottom-20 left-0 border-[#414141] w-full">
         <ul className="text-[14px] text-[#8f8f8f]">
-          <li>Address: Unit 11, 2800 john st Markham</li>
-<li>Phone: +1-647-886-7225</li>
-<li>Email: contact@spiralmountains.media</li>
+          <li><span className="text-yellow">Address</span> Unit 11, 2800 john st Markham</li>
+<li><span className="text-yellow">Phone</span> +1-647-886-7225</li>
+<li><span className="text-yellow">Email</span> contact@spiralmountains.media</li>
         </ul>
+       
       </div>
+      <div className="absolute text-[#8f8f8f] bottom-5 p-[15px] left-0 text-[10px] p-0"> © {new Date().getFullYear()} Spiral Mountain Media. All rights reserved.</div>
     </nav>
   )
 }
