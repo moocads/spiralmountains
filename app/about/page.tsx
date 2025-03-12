@@ -182,7 +182,7 @@ export default function About() {
               <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
             </div>
             <div className="relative text-white bg-white/70 block mt-12 md:w-[60vw] w-full rounded-lg">
-              <div className="grid md:grid-cols-6 grid-cols-3 gap-0 justify-items-center">
+              <div className="grid md:grid-cols-6 grid-cols-4 gap-0 justify-items-center">
                 {client.map((client) => (
                   <div
                     key={client.id}
@@ -378,10 +378,10 @@ export default function About() {
                 <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
               </svg>
             </button>
-            <div className="md:hidden bg-yellow p-[0px] fixed bottom-0 w-full left-0 grid grid-cols-2 gap-0 text-center rounded-t-[30px]">
-        <div className="bg-yellow border border-black vertical-middle p-6 text-[18px] rounded-tl-[15px]">
+            <div className="md:hidden bg-yellow p-[0px] fixed bottom-0 w-full left-0 grid grid-cols-1 gap-0 text-center rounded-t-[30px]">
+        <div className="bg-yellow border border-black vertical-middle p-6 text-[18px] rounded-t-[15px]">
           <a href="mailto:contact@spiralmountains.media">Contact</a></div>
-        <div className="bg-yellow border border-black p-6 text-[18px] rounded-tr-[15px]"> <Link href="/works">Works</Link></div>
+
       </div>
         </>
       )}
