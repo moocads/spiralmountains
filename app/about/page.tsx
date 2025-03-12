@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -113,6 +114,29 @@ export default function About() {
   // Add state to track hover state for each team member
   const [hoveredMember, setHoveredMember] = useState<number | null>(null);
 
+  // Add these animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 50 },
+    show: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        type: "spring",
+        bounce: 0.3
+      }
+    }
+  };
+
   return (
     <div onWheel={handleWheel}>
       {loading ? (
@@ -122,17 +146,19 @@ export default function About() {
       ) : (
         <>
           {/* Section 1 */}
-          <div
-            ref={(el) => (sectionRefs.current[0] = el!)}
+          <motion.div
+            ref={(el) => (sectionRefs.current[0] = el)}
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
             className="h-screen flex flex-col items-center justify-center"
           >
-            {/* 这里写你想要的内容，比如标题、文字、图片等等 */}
-            <div className="md:mb-12 md:max-w-[60vw] w-full p-2">
+            <motion.div variants={itemVariants} className="md:mb-12 md:max-w-[60vw] w-full p-2">
               <h2 className="my-2 px-4 md:text-8xl text-6xl font-['AvenirNextBold'] text-yellow-400 text-center uppercase">
                 About Us
               </h2>
-            </div>
-            <div className="relative text-white md:max-w-[60vw] w-full p-2 mb-[80px] text-center">
+            </motion.div>
+            <motion.div variants={itemVariants} className="relative text-white md:max-w-[60vw] w-full p-2 mb-[80px] text-center">
               <p>
                 Spiral Mountains Media is a video production and digital video marketing agency. We have a professional in-house production and marketing team. So, we can produce the right contents to fit your brand image and know how to stand out your brand.
               </p>
@@ -140,28 +166,28 @@ export default function About() {
               <p>
                 We offer video marketing services for your brand starting or moving up. We help to build your audience by targeting media platforms or finding the right spots to promote your business. We do the analysis for your marketing campaigns and make your next placement more accurate.
               </p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Section 2 */}
           <div
-            ref={(el) => (sectionRefs.current[1] = el!)}
+            ref={(el) => (sectionRefs.current[1] = el)}
             className="h-screen flex flex-col items-center justify-center p-2"
           >
-            {/* 在这里放你的第二个 Section 的自定义内容 */}
-          
-              <div className="flex-col items-center w-fit">
-                <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
-                <h2 className="my-2 px-4 md:text-4xl text-2xl font-bold text-yellow-400 whitespace-nowrap text-center uppercase">
-                  Clients We Have Served
-                </h2>
-                <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
-              </div>
-          
-            <div className="relative text-white bg-white/70 block mt-12 md:w-[60vw] w-full  rounded-lg">
+            <div className="flex-col items-center w-fit">
+              <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
+              <h2 className="my-2 px-4 md:text-4xl text-2xl font-bold text-yellow-400 whitespace-nowrap text-center uppercase">
+                Clients We Have Served
+              </h2>
+              <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
+            </div>
+            <div className="relative text-white bg-white/70 block mt-12 md:w-[60vw] w-full rounded-lg">
               <div className="grid md:grid-cols-4 grid-cols-3 gap-0 justify-items-center">
                 {client.map((client) => (
-                  <div key={client.id} className="border-x border-y border-white/10 rounded-lg transition delay-50 duration-500 hover:bg-[#d4b435]">
+                  <div
+                    key={client.id}
+                    className="border-x border-y border-white/10 rounded-lg transition delay-50 duration-500 hover:bg-[#d4b435]"
+                  >
                     <Image
                       src={client.Logo.url || "/placeholder.svg"}
                       alt={client.ClientName || 'Spiral Mountain Media'}
@@ -176,12 +202,16 @@ export default function About() {
           </div>
 
           {/* Section 3 */}
-          <div
-            ref={(el) => (sectionRefs.current[2] = el!)}
+          <motion.div
+            ref={(el) => (sectionRefs.current[2] = el)}
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
             className="h-screen flex items-center justify-center"
           >
-                    <section
-              id="section-3"
+            <motion.section
+              variants={containerVariants}
               className="snap-start h-screen flex flex-col justify-center items-center"
             >
               <div className="mb-12 flex justify-center">
@@ -227,16 +257,18 @@ export default function About() {
                   ))}
                 </div>
               </div>
-
-            </section>
-          </div>
+            </motion.section>
+          </motion.div>
 
           {/* Section 4 */}
-          <div
-            ref={(el) => (sectionRefs.current[3] = el!)}
-            className="h-screen flex flex-col items-center justify-center "
+          <motion.div
+            ref={(el) => (sectionRefs.current[3] = el)}
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="h-screen flex flex-col items-center justify-center"
           >
-            {/* 在这里放你的第四个 Section 的自定义内容 */}
             <div className="mb-6 flex justify-center">
               <div className="inline-flex flex-col items-center w-fit">
                 <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
@@ -266,7 +298,7 @@ export default function About() {
                 <p className="mb-2">Email: info@example.com</p>
               </div> */}
           
-          </div>
+          </motion.div>
 
           {/* 固定在右下角的按钮，点击后滚动到下一个 Section */}
    

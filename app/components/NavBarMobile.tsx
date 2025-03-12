@@ -60,11 +60,18 @@ export default function NavBarMobile() {
       >
         <div className="mt-2 space-y-2">
           <Link
-            href="/works"
+            href="/motion-graphic"
             onClick={() => setMenuOpen(false)} // 点击后收起
             className="block text-white hover:text-yellow-400"
           >
-            Works
+            Motion Graphic
+          </Link>
+           <Link
+            href="/live-action"
+            onClick={() => setMenuOpen(false)} // 点击后收起
+            className="block text-white hover:text-yellow-400"
+          >
+            Live Action
           </Link>
           <Link
             href="/about"

@@ -23,7 +23,7 @@ interface Project {
   };
 }
 
-export default function MotionGraphic() {
+export default function LiveAction() {
   const PROJECTS_PER_PAGE = 6; 
   const [selectedProject, setSelectedProject] = useState<(typeof projects)[0] | null>(null)
   const [visibleProjects, setVisibleProjects] = useState(PROJECTS_PER_PAGE)
@@ -94,7 +94,7 @@ export default function MotionGraphic() {
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const response = await fetch('https://smm-cms-bc62f0c8a130.herokuapp.com/api/smm-works-plural?populate=*');
+        const response = await fetch('https://smm-cms-bc62f0c8a130.herokuapp.com/api/live-actions?populate=*');
         if (!response.ok) {
           throw new Error('Failed to fetch projects');
         }
@@ -135,11 +135,11 @@ export default function MotionGraphic() {
 
   return (
     <>
-      <section className="relative z-10 bg-black px-8 py-12">
-        <div className="mb-8 flex justify-left ">
+      <section className="relative z-10 bg-black px-8 py-12 ">
+        <div className="mb-8 flex justify-left">
           <div className="inline-flex flex-col items-center w-fit">
-            <h2 className="mt-[100px] text-4xl md:mt-10 mb-[-30px] px-4 md:text-[90px] font-['AvenirNextBold'] text-yellow-400 uppercase ">
-              Motion Graphic
+            <h2 className="mt-[100px] text-4xl md:mt-10 mb-[-30px] px-4 md:text-[90px] font-['AvenirNextBold'] text-yellow-400 text-center uppercase mb-[-20px]">
+              Live Action
             </h2>
             <h2 className="absolute z-[-1] right-20 md:text-[200px] text-2xl font-['AvenirNextBold'] text-[#121212] text-center uppercase">
               Works
