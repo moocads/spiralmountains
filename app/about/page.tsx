@@ -158,14 +158,19 @@ export default function About() {
                 About Us
               </h2>
             </motion.div>
-            <motion.div variants={itemVariants} className="relative text-white md:max-w-[60vw] w-full p-2 mb-[80px] text-center">
+            <motion.div variants={itemVariants} className="relative text-white md:max-w-[50vw] w-full p-2 mb-[80px] text-center">
               <p>
-                Spiral Mountains Media is a video production and digital video marketing agency. We have a professional in-house production and marketing team. So, we can produce the right contents to fit your brand image and know how to stand out your brand.
+          Our studio is equipped with a standard cyclorama wall, professional recording studio, and high-end cinematic-grade cameras, lighting, and accessories to support all types of visual productions. Whether you’re working on brand commercials, music videos, or creative content, we provide the ideal space and technical expertise to bring your vision to life.
+
+
               </p>
               <br />
               <p>
-                We offer video marketing services for your brand starting or moving up. We help to build your audience by targeting media platforms or finding the right spots to promote your business. We do the analysis for your marketing campaigns and make your next placement more accurate.
+              Our studio is equipped with a standard cyclorama wall, professional recording studio, and high-end cinematic-grade cameras, lighting, and accessories to support all types of visual productions. Whether you’re working on brand commercials, music videos, or creative content, we provide the ideal space and technical expertise to bring your vision to life.
+
               </p>
+              <br />
+              <p>SMM Film & Studio—where creativity meets excellence in filmmaking.</p>
             </motion.div>
           </motion.div>
 
