@@ -5,8 +5,8 @@ import NavBarDesktop from "@/app/components/NavBarDesktop"
 import NavBarMobile from "@/app/components/NavBarMobile"
 
 export const metadata: Metadata = {
-  title: "SMM",
-  description: "SMM Portfolio",
+  title: "Video Production House | Spiral Mountains Media",
+  description: "Spiral Mountains Media is a video production and digital video marketing agency. We have professional in house production and marketing team.",
   icons:{
     icon: '/favicon.ico'
   }
