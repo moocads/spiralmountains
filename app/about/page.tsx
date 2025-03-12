@@ -182,7 +182,7 @@ export default function About() {
               <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
             </div>
             <div className="relative text-white bg-white/70 block mt-12 md:w-[60vw] w-full rounded-lg">
-              <div className="grid md:grid-cols-4 grid-cols-3 gap-0 justify-items-center">
+              <div className="grid md:grid-cols-6 grid-cols-3 gap-0 justify-items-center">
                 {client.map((client) => (
                   <div
                     key={client.id}
@@ -197,6 +197,69 @@ export default function About() {
                     />
                   </div>
                 ))}
+              </div>
+            </div>
+            <br />
+            <br />
+            <br />
+            <div className="flex-col items-center w-fit">
+              <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
+              <h2 className="my-2 px-4 md:text-4xl text-2xl font-bold text-yellow-400 whitespace-nowrap text-center uppercase">
+                Partner with
+              </h2>
+              <div className="h-3 w-full bg-[repeating-linear-gradient(45deg,white_0_5px,black_5px_12px)]" />
+            </div>
+            <div className="relative text-white block mt-12 md:w-[60vw] w-full rounded-lg">
+              <div className="grid md:grid-cols-6 grid-cols-3 gap-0 justify-items-center">
+                  <div className="border-x border-y border-white/10 rounded-lg transition delay-50 duration-500 hover:bg-[#d4b435]">
+                    <Image src= "/images/clients/balmoral.png"
+                      alt='Spiral Mountain Media'
+                      width={600}
+                      height={338}
+                      className="mix-blend-difference transition delay-50 duration-500 hover:mix-blend-normal"
+                    />
+                  </div>
+                  <div className="border-x border-y border-white/10 rounded-lg transition delay-50 duration-500 hover:bg-[#d4b435]">
+                    <Image src= "/images/clients/monet.png"
+                      alt='Spiral Mountain Media'
+                      width={600}
+                      height={338}
+                      className="mix-blend-difference transition delay-50 duration-500 hover:mix-blend-normal"
+                    />
+                  </div>
+                  <div className="border-x border-y border-white/10 rounded-lg transition delay-50 duration-500 hover:bg-[#d4b435]">
+                    <Image src= "/images/clients/momentum.png"
+                      alt='Spiral Mountain Media'
+                      width={600}
+                      height={338}
+                      className="mix-blend-difference transition delay-50 duration-500 hover:mix-blend-normal"
+                    />
+                  </div>
+                  <div className="border-x border-y border-white/10 rounded-lg transition delay-50 duration-500 hover:bg-[#d4b435]">
+                    <Image src= "/images/clients/onehub.png"
+                      alt='Spiral Mountain Media'
+                      width={600}
+                      height={338}
+                      className="mix-blend-difference transition delay-50 duration-500 hover:mix-blend-normal"
+                    />
+                  </div>
+                  <div className="border-x border-y border-white/10 rounded-lg transition delay-50 duration-500 hover:bg-[#d4b435]">
+                    <Image src= "/images/clients/touches.png"
+                      alt='Spiral Mountain Media'
+                      width={600}
+                      height={338}
+                      className="mix-blend-difference transition delay-50 duration-500 hover:mix-blend-normal"
+                    />
+                  </div>
+                  <div className="border-x border-y border-white/10 rounded-lg transition delay-50 duration-500 hover:bg-[#d4b435]">
+                    <Image src= "/images/clients/balmoral.png"
+                      alt='Spiral Mountain Media'
+                      width={600}
+                      height={338}
+                      className="mix-blend-difference transition delay-50 duration-500 hover:mix-blend-normal"
+                    />
+                  </div>
+              
               </div>
             </div>
           </div>

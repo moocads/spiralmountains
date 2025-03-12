@@ -94,7 +94,7 @@ export default function MotionGraphic() {
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const response = await fetch('https://smm-cms-bc62f0c8a130.herokuapp.com/api/smm-works-plural?populate=*');
+        const response = await fetch('https://smm-cms-bc62f0c8a130.herokuapp.com/api/motion-graphics?populate=*');
         if (!response.ok) {
           throw new Error('Failed to fetch projects');
         }
