@@ -165,7 +165,6 @@ export default function About() {
               <br />
               <p>
               Our studio is equipped with a standard cyclorama wall, professional recording studio, and high-end cinematic-grade cameras, lighting, and accessories to support all types of visual productions. Whether you’re working on brand commercials, music videos, or creative content, we provide the ideal space and technical expertise to bring your vision to life.
-
               </p>
               <br />
               <p>SMM Film & Studio—where creativity meets excellence in filmmaking.</p>
