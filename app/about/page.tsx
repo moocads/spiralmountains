@@ -160,9 +160,7 @@ export default function About() {
             </motion.div>
             <motion.div variants={itemVariants} className="relative text-white md:max-w-[50vw] w-full p-2 mb-[80px] text-center">
               <p>
-          Our studio is equipped with a standard cyclorama wall, professional recording studio, and high-end cinematic-grade cameras, lighting, and accessories to support all types of visual productions. Whether you’re working on brand commercials, music videos, or creative content, we provide the ideal space and technical expertise to bring your vision to life.
-
-
+              SMM Film & Studio is a professional film production and equipment rental studio specializing in commercial filming, video production, and studio space rental. With over a decade of industry experience, our team has collaborated with renowned brands and advertising agencies to create diverse and impactful commercial content.
               </p>
               <br />
               <p>
