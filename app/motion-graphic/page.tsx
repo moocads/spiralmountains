@@ -13,7 +13,7 @@ interface Project {
   documentId: string;
   ProjectName: string;
   Display: boolean;
-  description: string | null;
+  Description: string | null;
   ListOrder: number | null; // 允许为 null
   FeatureImage: {
     url: string;
@@ -228,10 +228,10 @@ export default function MotionGraphic() {
               />
               <div className="relative bottom-0 left-0 bg-gradient-to-t from-black to-transparent md:p-4 p-2 text-left">
                 <h2 className="text-2xl md:text-3xl font-bold text-white">{selectedProject.ProjectName}</h2>
-                <div className="mt-0 grid grid-cols-1 gap-8 text-lg text-white/70 ">
+                <div className="mt-0 grid grid-cols-1 gap-8 text-lg  ">
                   <div>
-                    <p className="font-normal text-white ">
-                      {selectedProject.description || " "}
+                    <p className="pt-4 pr-4 text-[#acacac] ">
+                      {selectedProject.Description || " "}
                     </p>
                   </div>
                 </div>

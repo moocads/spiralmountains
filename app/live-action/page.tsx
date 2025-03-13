@@ -13,7 +13,7 @@ interface Project {
   documentId: string;
   ProjectName: string;
   Display: boolean;
-  description: string | null;
+  Description: string | null;
   ListOrder: number | null; // 允许为 null
   FeatureImage: {
     url: string;
@@ -230,8 +230,8 @@ export default function LiveAction() {
                 <h2 className="text-2xl md:text-3xl font-bold text-white">{selectedProject.ProjectName}</h2>
                 <div className="mt-0 grid grid-cols-1 gap-8 text-lg text-white/70 ">
                   <div>
-                    <p className="font-normal text-white ">
-                      {selectedProject.description || " "}
+                    <p className="pt-4 pr-4 text-[#acacac] ">
+                      {selectedProject.Description || " "}
                     </p>
                   </div>
                 </div>
