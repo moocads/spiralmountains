@@ -22,7 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </div>
 
         {/* 桌面端左侧固定导航 */}
-        <NavBarDesktop />
+        <div className="desktop-nav">
+          <NavBarDesktop />
+        </div>
 
         {/* 主体内容区：如果左侧是 64px 宽，可留出对应的 margin/padding */}
         <main className="relative md:ml-64 md:p-4 z-0">
@@ -30,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
 
         {/* 右侧斜纹条：仅在 lg 屏幕显示 */}
-        <div className="hidden lg:block fixed inset-y-0 z-10 right-0 w-4 bg-[repeating-linear-gradient(45deg,#000000,#000000_10px,#FFD700_10px,#FFD700_20px)]" />
+        <div className="hidden lg:block fixed inset-y-0 z-10 right-0 w-4 bg-[repeating-linear-gradient(45deg,#000000,#000000_10px,#FFD700_10px,#FFD700_20px)] right-stripe" />
       </body>
     </html>
   )

@@ -30,6 +30,28 @@ export default function LiveAction() {
   const [isFadingOut, setIsFadingOut] = useState(false)
   const [previewStates, setPreviewStates] = useState<{ [id: number]: boolean }>({})
 
+  // Add effect to hide/show navigation when video player is active
+  useEffect(() => {
+    const navDesktop = document.querySelector('div.desktop-nav');
+    const rightStripe = document.querySelector('div.right-stripe');
+    
+    if (selectedProject) {
+      // Hide only desktop navigation and right stripe when video is selected
+      if (navDesktop) navDesktop.classList.add('hidden');
+      if (rightStripe) rightStripe.classList.remove('lg:block');
+    } else {
+      // Show desktop navigation and right stripe when video is closed
+      if (navDesktop) navDesktop.classList.remove('hidden');
+      if (rightStripe) rightStripe.classList.add('lg:block');
+    }
+    
+    // Cleanup function
+    return () => {
+      if (navDesktop) navDesktop.classList.remove('hidden');
+      if (rightStripe) rightStripe.classList.add('lg:block');
+    };
+  }, [selectedProject]);
+
   const startPreview = (id: number) => {
     setPreviewStates((prev) => ({ ...prev, [id]: true }))
     setTimeout(() => {
@@ -172,21 +194,6 @@ export default function LiveAction() {
                     height={338}
                     className="object-cover transition-all duration-300"
                   />
-                  {project.Video?.url && (
-                    <div
-                      className={`absolute inset-0 transition-opacity duration-300 ${
-                        isPreviewPlaying ? "opacity-100" : "opacity-0"
-                      }`}
-                    >
-                      <video
-                        src={project.Video.url}
-                        muted
-                        autoPlay
-                        playsInline
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    </div>
-                  )}
                 </div>
                 <div className="inset-0 bg-black/60 p-4 transition-opacity duration-300 group-hover:opacity-100">
                   <h3 className="text-l font-bold text-white">{project.ProjectName}</h3>
@@ -206,7 +213,7 @@ export default function LiveAction() {
       </section>
 
       {selectedProject && (
-        <section className="absolute inset-0 z-20 bg-black">
+        <section className="fixed inset-0 z-20 bg-black">
 
           <Button
             variant="ghost"
@@ -221,7 +228,7 @@ export default function LiveAction() {
           </Button>
 
           <div className={`transition-opacity duration-300 ${isFadingOut ? "opacity-0" : "opacity-100"}`}>
-            <div className="absolute md:top-0 top-40 right-0 md:w-5/6 w-full">
+            <div className="absolute md:top-0 top-40 right-0 w-full">
               <VideoPlayer
                 key={selectedProject.Video?.url}
                 src={selectedProject.Video?.url}
