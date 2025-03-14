@@ -228,7 +228,7 @@ export default function LiveAction() {
           </Button>
 
           <div className={`transition-opacity duration-300 ${isFadingOut ? "opacity-0" : "opacity-100"}`}>
-            <div className="absolute md:top-0 top-40 right-0 w-full">
+            <div className="absolute md:top-0 top-40 right-0 w-full h-full overflow-y-auto">
               <VideoPlayer
                 key={selectedProject.Video?.url}
                 src={selectedProject.Video?.url}
