@@ -214,7 +214,6 @@ export default function LiveAction() {
 
       {selectedProject && (
         <section className="fixed inset-0 z-20 bg-black">
-
           <Button
             variant="ghost"
             size="lg"
@@ -228,34 +227,35 @@ export default function LiveAction() {
           </Button>
 
           <div className={`transition-opacity duration-300 ${isFadingOut ? "opacity-0" : "opacity-100"}`}>
-            <div className="absolute md:top-0 top-40 right-0 w-full h-full overflow-y-auto">
-              <VideoPlayer
-                key={selectedProject.Video?.url}
-                src={selectedProject.Video?.url}
-                poster={selectedProject.FeatureImage?.url}
-              />
-              <div className="relative bottom-0 left-0 bg-gradient-to-t from-black to-transparent md:p-4 p-2 text-left">
-                <h2 className="text-2xl md:text-3xl font-bold text-white">{selectedProject.ProjectName}</h2>
-                <div className="mt-0 grid grid-cols-1 gap-8 text-lg text-white/70 ">
-                  <div>
-                    <p className="pt-4 pr-4 text-[#acacac] ">
-                      {selectedProject.Description || " "}
-                    </p>
+            <div className="fixed md:top-0 top-40 right-0 left-0 bottom-0 overflow-y-auto">
+              <div className="w-5/6 mx-auto py-8">
+                <VideoPlayer
+                  key={selectedProject.Video?.url}
+                  src={selectedProject.Video?.url}
+                  poster={selectedProject.FeatureImage?.url}
+                />
+                <div className="relative bg-gradient-to-t from-black to-transparent md:p-4 p-2 text-left">
+                  <h2 className="text-2xl md:text-3xl font-bold text-white">{selectedProject.ProjectName}</h2>
+                  <div className="mt-0 grid grid-cols-1 gap-8 text-sm">
+                    <div>
+                      <p className="pt-4 pr-4 text-[#acacac]">
+                        {selectedProject.Description || " "}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="md:relative md:text-left text-center mt-[20px] fixed bottom-[10px] right-0 left-0 bg-transparent">
-                <Button onClick={handlePrevious} className="bg-transparent">
-                  <img src="/images/prev.png" width="100px" alt="" />
-                </Button>
-                <Button onClick={handleNext} className="bg-transparent">
-                  <img src="/images/next.png" width="100px" alt="" />
-                </Button>
+                <div className="text-left mt-6 pb-8">
+                  <Button onClick={handlePrevious} className="bg-transparent">
+                    <img src="/images/prev.png" width="100px" alt="" />
+                  </Button>
+                  <Button onClick={handleNext} className="bg-transparent">
+                    <img src="/images/next.png" width="100px" alt="" />
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
-     
         </section>
       )}
     </>

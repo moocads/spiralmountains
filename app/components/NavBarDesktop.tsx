@@ -19,12 +19,12 @@ export default function NavBarDesktop() {
       </Link>
 
       {/* 导航链接 */}
-      <div className="mt-[100%] h-[100vh] align-middle">
+      <div className="mt-[50%] h-[100vh] align-middle">
         <NavLinks />
       </div>
 
       <div className="absolute  p-[15px] bottom-20 left-0  w-full">
-        <ul className="text-[14px] text-[#8f8f8f]">
+        <ul className="text-[13px] text-[#8f8f8f]">
           <li><span className="text-yellow">Address</span> Unit 11, 2800 john st Markham</li>
 <li><span className="text-yellow">Phone</span> +1-647-886-7225</li>
 <li><span className="text-yellow">Email</span> contact@spiralmountains.media</li>

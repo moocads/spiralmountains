@@ -30,6 +30,28 @@ export default function MotionGraphic() {
   const [isFadingOut, setIsFadingOut] = useState(false)
   const [previewStates, setPreviewStates] = useState<{ [id: number]: boolean }>({})
 
+  // Add effect to hide/show navigation when video player is active
+  useEffect(() => {
+    const navDesktop = document.querySelector('div.desktop-nav');
+    const rightStripe = document.querySelector('div.right-stripe');
+    
+    if (selectedProject) {
+      // Hide only desktop navigation and right stripe when video is selected
+      if (navDesktop) navDesktop.classList.add('hidden');
+      if (rightStripe) rightStripe.classList.remove('lg:block');
+    } else {
+      // Show desktop navigation and right stripe when video is closed
+      if (navDesktop) navDesktop.classList.remove('hidden');
+      if (rightStripe) rightStripe.classList.add('lg:block');
+    }
+    
+    // Cleanup function
+    return () => {
+      if (navDesktop) navDesktop.classList.remove('hidden');
+      if (rightStripe) rightStripe.classList.add('lg:block');
+    };
+  }, [selectedProject]);
+
   const startPreview = (id: number) => {
     setPreviewStates((prev) => ({ ...prev, [id]: true }))
     setTimeout(() => {
@@ -135,11 +157,11 @@ export default function MotionGraphic() {
 
   return (
     <>
-      <section className="relative z-10 bg-black px-8 py-12">
-        <div className="mb-8 flex justify-left ">
+      <section className="relative z-10 bg-black px-8 py-12 ">
+        <div className="mb-8 flex justify-left">
           <div className="inline-flex flex-col items-center w-fit">
-            <h2 className="mt-[100px] text-4xl mt-10  px-4 md:text-[90px] font-['AvenirNextBold'] text-yellow-400 uppercase ">
-              Motion Graphic
+            <h2 className="mt-[50px] text-4xl  px-4 md:text-[90px] font-['AvenirNextBold'] text-yellow-400 text-center uppercase ">
+                Motion Graphic
             </h2>
             <h2 className="absolute z-[-1] right-20 md:text-[200px] text-2xl font-['AvenirNextBold'] text-[#121212] text-center uppercase">
               Works
@@ -172,21 +194,6 @@ export default function MotionGraphic() {
                     height={338}
                     className="object-cover transition-all duration-300"
                   />
-                  {project.Video?.url && (
-                    <div
-                      className={`absolute inset-0 transition-opacity duration-300 ${
-                        isPreviewPlaying ? "opacity-100" : "opacity-0"
-                      }`}
-                    >
-                      <video
-                        src={project.Video.url}
-                        muted
-                        autoPlay
-                        playsInline
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    </div>
-                  )}
                 </div>
                 <div className="inset-0 bg-black/60 p-4 transition-opacity duration-300 group-hover:opacity-100">
                   <h3 className="text-l font-bold text-white">{project.ProjectName}</h3>
@@ -206,7 +213,7 @@ export default function MotionGraphic() {
       </section>
 
       {selectedProject && (
-        <section className="absolute inset-0 z-20 bg-black">
+        <section className="fixed inset-0 z-20 bg-black">
           <Button
             variant="ghost"
             size="lg"
@@ -220,30 +227,32 @@ export default function MotionGraphic() {
           </Button>
 
           <div className={`transition-opacity duration-300 ${isFadingOut ? "opacity-0" : "opacity-100"}`}>
-            <div className="absolute md:top-0 top-40 right-0 md:w-5/6 w-full">
-              <VideoPlayer
-                key={selectedProject.Video?.url}
-                src={selectedProject.Video?.url}
-                poster={selectedProject.FeatureImage?.url}
-              />
-              <div className="relative bottom-0 left-0 bg-gradient-to-t from-black to-transparent md:p-4 p-2 text-left">
-                <h2 className="text-2xl md:text-3xl font-bold text-white">{selectedProject.ProjectName}</h2>
-                <div className="mt-0 grid grid-cols-1 gap-8 text-lg  ">
-                  <div>
-                    <p className="pt-4 pr-4 text-[#acacac] ">
-                      {selectedProject.Description || " "}
-                    </p>
+            <div className="fixed md:top-0 top-40 right-0 left-0 bottom-0 overflow-y-auto">
+              <div className="w-5/6 mx-auto py-8">
+                <VideoPlayer
+                  key={selectedProject.Video?.url}
+                  src={selectedProject.Video?.url}
+                  poster={selectedProject.FeatureImage?.url}
+                />
+                <div className="relative bg-gradient-to-t from-black to-transparent md:p-4 p-2 text-left">
+                  <h2 className="text-2xl md:text-3xl font-bold text-white">{selectedProject.ProjectName}</h2>
+                  <div className="mt-0 grid grid-cols-1 gap-8 text-sm">
+                    <div>
+                      <p className="pt-4 pr-4 text-[#acacac]">
+                        {selectedProject.Description || " "}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="md:relative md:text-left text-center mt-[20px] fixed bottom-[10px] right-0 left-0 bg-transparent">
-                <Button onClick={handlePrevious} className="bg-transparent">
-                  <img src="/images/prev.png" width="100px" alt="" />
-                </Button>
-                <Button onClick={handleNext} className="bg-transparent">
-                  <img src="/images/next.png" width="100px" alt="" />
-                </Button>
+                <div className="text-left mt-6 pb-8">
+                  <Button onClick={handlePrevious} className="bg-transparent">
+                    <img src="/images/prev.png" width="100px" alt="" />
+                  </Button>
+                  <Button onClick={handleNext} className="bg-transparent">
+                    <img src="/images/next.png" width="100px" alt="" />
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
