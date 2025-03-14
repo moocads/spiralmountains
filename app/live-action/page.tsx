@@ -138,7 +138,7 @@ export default function LiveAction() {
       <section className="relative z-10 bg-black px-8 py-12 ">
         <div className="mb-8 flex justify-left">
           <div className="inline-flex flex-col items-center w-fit">
-            <h2 className="mt-[100px] text-4xl md:mt-10 mb-[-30px] px-4 md:text-[90px] font-['AvenirNextBold'] text-yellow-400 text-center uppercase mb-[-20px]">
+            <h2 className="mt-[50px] text-4xl  px-4 md:text-[90px] font-['AvenirNextBold'] text-yellow-400 text-center uppercase ">
               Live Action
             </h2>
             <h2 className="absolute z-[-1] right-20 md:text-[200px] text-2xl font-['AvenirNextBold'] text-[#121212] text-center uppercase">
@@ -207,6 +207,7 @@ export default function LiveAction() {
 
       {selectedProject && (
         <section className="absolute inset-0 z-20 bg-black">
+
           <Button
             variant="ghost"
             size="lg"
@@ -247,6 +248,7 @@ export default function LiveAction() {
               </div>
             </div>
           </div>
+     
         </section>
       )}
     </>
