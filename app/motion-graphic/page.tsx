@@ -160,7 +160,7 @@ export default function MotionGraphic() {
       <section className="relative z-10 bg-black px-8 py-12 ">
         <div className="mb-8 flex justify-left">
           <div className="inline-flex flex-col items-center w-fit">
-            <h2 className="mt-[50px] text-4xl  px-4 md:text-[90px] font-['AvenirNextBold'] text-yellow-400 text-center uppercase ">
+            <h2 className="mt-[80px] md:mt-[50px] text-4xl  px-4 md:text-[90px] font-['AvenirNextBold'] text-yellow-400 text-center uppercase ">
                 Motion Graphic
             </h2>
             <h2 className="absolute z-[-1] right-20 md:text-[200px] text-2xl font-['AvenirNextBold'] text-[#121212] text-center uppercase">

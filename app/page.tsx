@@ -40,7 +40,7 @@ export default function Home() {
     }}
   ></div>
 
-<div className="md:hidden  p-[0px] fixed bottom-0 w-full left-0 grid grid-cols-3 gap-0 text-center rounded-t-[30px]">
+<div className="md:hidden  p-[0px] fixed z-20 bottom-0 w-full left-0 grid grid-cols-3 gap-0 text-center rounded-t-[30px]">
 
 <div className="bg-yellow border border-black p-3 py-6 text-[18px] rounded-tl-[15px]"> <Link href="/live-action">Live Action</Link></div>
   <div className="bg-yellow border border-black p-3 py-6 text-[16px]"> <Link href="/motion-graphic">Motion Graphic</Link></div>
