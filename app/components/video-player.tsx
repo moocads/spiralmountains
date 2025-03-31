@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Pause, Play } from "lucide-react"
+import { Pause, Play, Volume2, VolumeX } from "lucide-react"
 
 import { Button } from "@/app/components/ui/button"
 import { Slider } from "@/app/components/ui/slider"
@@ -9,13 +9,23 @@ import { Slider } from "@/app/components/ui/slider"
 interface VideoPlayerProps {
   src: string
   poster?: string
+  className?: string
 }
 
-export function VideoPlayer({ src, poster }: VideoPlayerProps) {
+export function VideoPlayer({ src, poster, className }: VideoPlayerProps) {
   const videoRef = React.useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = React.useState(false)
   const [progress, setProgress] = React.useState(0)
   const [duration, setDuration] = React.useState(0)
+  const [volume, setVolume] = React.useState(1)
+  const [isMuted, setIsMuted] = React.useState(false)
+
+  React.useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.volume = volume
+      videoRef.current.muted = isMuted
+    }
+  }, [volume, isMuted])
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -49,6 +59,20 @@ export function VideoPlayer({ src, poster }: VideoPlayerProps) {
     }
   }
 
+  const handleVolumeChange = (value: number[]) => {
+    const newVolume = value[0]
+    setVolume(newVolume)
+    if (newVolume === 0) {
+      setIsMuted(true)
+    } else if (isMuted) {
+      setIsMuted(false)
+    }
+  }
+
+  const toggleMute = () => {
+    setIsMuted(!isMuted)
+  }
+
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60)
     const seconds = Math.floor(time % 60)
@@ -56,7 +80,7 @@ export function VideoPlayer({ src, poster }: VideoPlayerProps) {
   }
 
   return (
-    <div className="group relative aspect-video bg-black" onClick={togglePlay}>
+    <div className={`group relative aspect-video bg-black ${className}`} onClick={togglePlay}>
       <video
         ref={videoRef}
         className="h-full w-full"
@@ -84,7 +108,7 @@ export function VideoPlayer({ src, poster }: VideoPlayerProps) {
       )}
 
       {/* Video Controls */}
-      <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+      <div className="absolute inset-0 flex flex-col justify-end opacity-100 transition-opacity duration-300 group-hover:opacity-100 z-100">
         <div className="space-y-3 p-4">
           {/* Progress Bar */}
           <Slider
@@ -113,6 +137,39 @@ export function VideoPlayer({ src, poster }: VideoPlayerProps) {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Custom volume controls */}
+      <div 
+        className="absolute bottom-2 right-4 flex items-center bg-black/50 rounded-full p-2 
+            transition-opacity opacity-100"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleMute();
+          }}
+          className="text-white mr-2 p-1"
+        >
+          {isMuted || volume === 0 ? (
+            <VolumeX className="h-5 w-5" />
+          ) : (
+            <Volume2 className="h-5 w-5" />
+          )}
+        </button>
+        
+        <div className="w-24" onClick={(e) => e.stopPropagation()}>
+          <Slider 
+            value={[isMuted ? 0 : volume]} 
+            min={0} 
+            max={1} 
+            step={0.01} 
+            onValueChange={handleVolumeChange} 
+            onPointerDown={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+          />
         </div>
       </div>
     </div>

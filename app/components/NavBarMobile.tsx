@@ -58,7 +58,7 @@ export default function NavBarMobile() {
           ${menuOpen ? "max-h-40" : "max-h-0"}
         `}
       >
-        <div className="mt-2 space-y-2">
+        <div className="mt-2 space-y-2 ">
         <Link
             href="/live-action"
             onClick={() => setMenuOpen(false)} // 点击后收起
