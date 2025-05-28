@@ -27,7 +27,7 @@ export default function NavBarDesktop() {
         <ul className="text-[13px] text-[#8f8f8f]">
           <li><span className="text-yellow">Address</span> Unit 11, 2800 john st Markham</li>
 <li><span className="text-yellow">Phone</span> +1-647-886-7225</li>
-<li><span className="text-yellow">Email</span> contact@spiralmountains.media</li>
+<li><span className="text-yellow">Email</span><a href="mailto:info@spiralmountains.media">info@spiralmountains.media</a> </li>
         </ul>
        
       </div>

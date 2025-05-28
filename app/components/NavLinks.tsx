@@ -56,6 +56,8 @@ Motion<br/>Graphic
   </svg> */}
   About
 </Link>
+<Link href="https://smmstudio.ca/" className="group flex items-center text-[20px] font-['AvenirNextBold'] transition-all delay-150 duration-300 ease-in-out hover:text-yellow-400 pt-[0px] text-[#979797] hover:text-[25px] font-['AvenirNextBold']" target="_blank"> Studio</Link>
+
 
 
     </div>
