@@ -81,6 +81,15 @@ export default function NavBarMobile() {
           >
             About
           </Link>
+           <Link
+            href="https://smmstudio.ca/"
+            onClick={() => setMenuOpen(false)}
+            className="block text-white relative hover:text-yellow-400"
+          >
+            Studio
+            <span className="absolute text-[10px] text-black bg-[#FCC800] px-[2px] py-[2px] left-[10%] top-[-5px] leading-none shadow-[0px_0px_10px_3px_rgba(255,223,43,0.60)]" >NEW</span>
+          </Link>
+    
         </div>
       </div>
 

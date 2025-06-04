@@ -56,7 +56,7 @@ Motion<br/>Graphic
   </svg> */}
   About
 </Link>
-<Link href="https://smmstudio.ca/" className="group flex items-center text-[20px] font-['AvenirNextBold'] transition-all delay-150 duration-300 ease-in-out hover:text-yellow-400 pt-[0px] text-[#979797] hover:text-[25px] font-['AvenirNextBold']" target="_blank"> Studio</Link>
+<Link href="https://smmstudio.ca/" className="group w-auto relative flex items-center text-[20px] font-['AvenirNextBold'] transition-all delay-150 duration-300 ease-in-out hover:text-yellow-400 pt-[0px] text-[#979797] hover:text-[25px] font-['AvenirNextBold']" target="_blank"> Studio <span className="absolute text-[10px] text-black bg-[#FCC800] px-[2px] py-[2px] right-[50%] top-[-5px] leading-none shadow-[0px_0px_10px_3px_rgba(255,223,43,0.60)]" >NEW</span></Link>
 
 
 
