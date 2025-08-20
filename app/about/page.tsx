@@ -237,14 +237,7 @@ export default function About() {
                       className="mix-blend-difference transition delay-50 duration-500 hover:mix-blend-normal"
                     />
                   </div>
-                  {/* <div className="border-x border-y border-white/10 rounded-lg transition delay-50 duration-500 hover:bg-[#d4b435]">
-                    <Image src= "/images/clients/onehub.png"
-                      alt='Spiral Mountain Media'
-                      width={600}
-                      height={338}
-                      className="mix-blend-difference transition delay-50 duration-500 hover:mix-blend-normal"
-                    />
-                  </div> */}
+        
                   <div className="border-x border-y border-white/10 rounded-lg transition delay-50 duration-500 hover:bg-[#d4b435]">
                     <Image src= "/images/clients/touches.png"
                       alt='Spiral Mountain Media'
@@ -255,6 +248,14 @@ export default function About() {
                   </div>
                        <div className="border-x border-y border-white/10 rounded-lg transition delay-50 duration-500 hover:bg-[#d4b435]">
                     <Image src= "/images/clients/egg-plant.png"
+                      alt='Spiral Mountain Media'
+                      width={600}
+                      height={338}
+                      className="mix-blend-difference transition delay-50 duration-500 hover:mix-blend-normal"
+                    />
+                  </div>
+                             <div className="border-x border-y border-white/10 rounded-lg transition delay-50 duration-500 hover:bg-[#d4b435]">
+                    <Image src= "/images/clients/onehub.png"
                       alt='Spiral Mountain Media'
                       width={600}
                       height={338}
