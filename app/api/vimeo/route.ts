@@ -27,11 +27,12 @@ export async function GET(request: NextRequest) {
     }
 
     const data = await response.json()
+    const normalizedEmbedUrl = toVimeoEmbedUrl(url)
     return NextResponse.json(
       {
         title: data.title || null,
         thumbnailUrl: data.thumbnail_url || null,
-        embedUrl: data.video_id ? `https://player.vimeo.com/video/${data.video_id}` : toVimeoEmbedUrl(url),
+        embedUrl: normalizedEmbedUrl,
       },
       { status: 200 },
     )
