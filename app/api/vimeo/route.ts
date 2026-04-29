@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { toVimeoEmbedUrl } from "@/app/lib/vimeo"
 
+const YOUTUBE_HOSTS = new Set(["youtube.com", "www.youtube.com", "m.youtube.com", "youtu.be", "www.youtu.be"])
+
 export async function GET(request: NextRequest) {
   const url = request.nextUrl.searchParams.get("url")
   if (!url) {
@@ -14,20 +16,26 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Invalid url parameter" }, { status: 400 })
   }
 
-  if (!parsed.hostname.includes("vimeo.com")) {
-    return NextResponse.json({ error: "Only Vimeo URLs are supported" }, { status: 400 })
+  const isVimeo = parsed.hostname.includes("vimeo.com")
+  const isYoutube = YOUTUBE_HOSTS.has(parsed.hostname)
+
+  if (!isVimeo && !isYoutube) {
+    return NextResponse.json({ error: "Only Vimeo or YouTube URLs are supported" }, { status: 400 })
   }
 
   try {
-    const oEmbedUrl = `https://vimeo.com/api/oembed.json?url=${encodeURIComponent(parsed.toString())}`
+    const oEmbedUrl = isVimeo
+      ? `https://vimeo.com/api/oembed.json?url=${encodeURIComponent(parsed.toString())}`
+      : `https://www.youtube.com/oembed?url=${encodeURIComponent(parsed.toString())}&format=json`
     const response = await fetch(oEmbedUrl, { cache: "no-store" })
+    const fallbackEmbedUrl = isVimeo ? toVimeoEmbedUrl(url) : url
 
     if (!response.ok) {
-      return NextResponse.json({ thumbnailUrl: null, title: null, embedUrl: toVimeoEmbedUrl(url) }, { status: 200 })
+      return NextResponse.json({ thumbnailUrl: null, title: null, embedUrl: fallbackEmbedUrl }, { status: 200 })
     }
 
     const data = await response.json()
-    const normalizedEmbedUrl = toVimeoEmbedUrl(url)
+    const normalizedEmbedUrl = isVimeo ? toVimeoEmbedUrl(url) : url
     return NextResponse.json(
       {
         title: data.title || null,
@@ -37,6 +45,7 @@ export async function GET(request: NextRequest) {
       { status: 200 },
     )
   } catch {
-    return NextResponse.json({ thumbnailUrl: null, title: null, embedUrl: toVimeoEmbedUrl(url) }, { status: 200 })
+    const fallbackEmbedUrl = isVimeo ? toVimeoEmbedUrl(url) : url
+    return NextResponse.json({ thumbnailUrl: null, title: null, embedUrl: fallbackEmbedUrl }, { status: 200 })
   }
 }

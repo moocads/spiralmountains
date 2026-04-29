@@ -5,6 +5,15 @@ interface ParsedVimeoUrl {
   hash: string | null
 }
 
+export function isVimeoUrl(rawUrl: string) {
+  try {
+    const parsed = new URL(rawUrl)
+    return VIMEO_HOSTS.has(parsed.hostname)
+  } catch {
+    return false
+  }
+}
+
 function extractVimeoInfo(rawUrl: string): ParsedVimeoUrl | null {
   try {
     const parsed = new URL(rawUrl)

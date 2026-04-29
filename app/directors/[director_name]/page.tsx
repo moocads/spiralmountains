@@ -68,34 +68,28 @@ export default function DirectorDetailPage({ params }: { params: { director_name
     let isCancelled = false
     const currentDirector = director
 
-    async function fetchVimeoMeta() {
+    async function fetchVideoMeta() {
       const entries = await Promise.all(
         currentDirector.works.map(async (work) => {
+          const fallbackMeta: VimeoMeta = {
+            title: work.title || null,
+            thumbnailUrl: currentDirector.director_photo?.url || "/placeholder.jpg",
+            embedUrl: work.source_link,
+          }
+
           try {
             const response = await fetch(`/api/vimeo?url=${encodeURIComponent(work.source_link)}`)
             const data = await response.json()
-            const fallbackMeta: VimeoMeta = {
-              title: work.title || null,
-              thumbnailUrl: currentDirector.director_photo?.url || "/placeholder.jpg",
-              embedUrl: work.source_link,
-            }
             return [
               work.id,
               {
-                title: data.title || fallbackMeta.title,
+                title: fallbackMeta.title || data.title || null,
                 thumbnailUrl: data.thumbnailUrl || fallbackMeta.thumbnailUrl,
                 embedUrl: data.embedUrl || fallbackMeta.embedUrl,
               },
             ] as const
           } catch {
-            return [
-              work.id,
-              {
-                title: work.title || null,
-                thumbnailUrl: currentDirector.director_photo?.url || "/placeholder.jpg",
-                embedUrl: work.source_link,
-              },
-            ] as const
+            return [work.id, fallbackMeta] as const
           }
         }),
       )
@@ -105,7 +99,7 @@ export default function DirectorDetailPage({ params }: { params: { director_name
       }
     }
 
-    fetchVimeoMeta()
+    fetchVideoMeta()
 
     return () => {
       isCancelled = true
@@ -209,12 +203,12 @@ export default function DirectorDetailPage({ params }: { params: { director_name
                 <div className="relative aspect-video overflow-hidden rounded-3xl bg-[#1b1b1b] group-hover:border-[3px] group-hover:border-yellow-400">
                   <Image
                     src={vimeoByWorkId[work.id]?.thumbnailUrl || director.director_photo?.url || "/placeholder.jpg"}
-                    alt={vimeoByWorkId[work.id]?.title || work.title || `Work ${index + 1}`}
+                    alt={work.title || vimeoByWorkId[work.id]?.title || `Work ${index + 1}`}
                     fill
                     className="object-cover transition-all duration-300 group-hover:scale-105"
                   />
                 </div>
-                <p className="mt-2 text-lg text-white">{vimeoByWorkId[work.id]?.title || work.title || `Work ${index + 1}`}</p>
+                <p className="mt-2 text-lg text-white">{work.title || vimeoByWorkId[work.id]?.title || `Work ${index + 1}`}</p>
               </button>
             ))}
           </div>
@@ -241,14 +235,14 @@ export default function DirectorDetailPage({ params }: { params: { director_name
               <div className="relative aspect-video overflow-hidden rounded-2xl bg-black">
                 <VimeoPlayer
                   url={selectedWorkMeta?.embedUrl || selectedWork.source_link}
-                  title={selectedWorkMeta?.title || selectedWork.title || selectedWorkLabel}
+                  title={selectedWork.title || selectedWorkMeta?.title || selectedWorkLabel}
                   autoplay
                   className="h-full w-full"
                 />
               </div>
               <div className="mt-4">
                 <h3 className="text-2xl font-bold text-white">
-                  {selectedWorkMeta?.title || selectedWork.title || selectedWorkLabel}
+                  {selectedWork.title || selectedWorkMeta?.title || selectedWorkLabel}
                 </h3>
               </div>
 
