@@ -73,7 +73,13 @@ export default function NavBarMobile() {
           >
             Motion Graphic
           </Link>
-
+          <Link
+            href="/directors"
+            onClick={() => setMenuOpen(false)}
+            className="block text-white hover:text-yellow-400"
+          >
+            Directors
+          </Link>
           <Link
             href="/about"
             onClick={() => setMenuOpen(false)}
@@ -89,14 +95,6 @@ export default function NavBarMobile() {
             Studio
             <span className="absolute text-[10px] text-black bg-[#FCC800] px-[2px] py-[2px] left-[10%] top-[-5px] leading-none shadow-[0px_0px_10px_3px_rgba(255,223,43,0.60)]" >NEW</span>
           </Link>
-          <Link
-            href="/directors"
-            onClick={() => setMenuOpen(false)}
-            className="block text-white hover:text-yellow-400"
-          >
-            Directors
-          </Link>
-    
         </div>
       </div>
 

@@ -40,13 +40,14 @@ export default function Home() {
     }}
   ></div>
 
-<div className="md:hidden p-[0px] fixed z-20 bottom-0 w-full left-0 grid grid-cols-4 gap-0 text-center rounded-t-[30px]">
+<div className="md:hidden p-[0px] fixed z-20 bottom-0 w-full left-0 grid grid-cols-5 gap-0 text-center rounded-t-[30px]">
 
-<div className="bg-yellow border border-black p-3 py-4 text-[18px] rounded-tl-[15px]"> <Link href="/live-action">Live Action</Link></div>
-  <div className="bg-yellow border border-black p-3 py-4 text-[16px]"> <Link href="/motion-graphic">Motion Graphic</Link></div>
-        <div className="bg-yellow border border-black p-3 py-4 text-[16px]">
+<div className="bg-yellow border border-black p-1 py-4 text-[16px] rounded-tl-[15px] leading-none items-baseline justify-center"> <Link href="/live-action">Live Action</Link></div>
+  <div className="bg-yellow border border-black p-1 py-4 text-[16px] leading-none items-baseline justify-center"> <Link href="/motion-graphic">Motion Graphic</Link></div>
+        <div className="bg-yellow border border-black p-1 py-4 text-[16px] leading-none items-baseline justify-center"> <Link href="/directors">Directors</Link></div>
+        <div className="bg-yellow border border-black p-1 py-4 text-[16px] leading-none items-baseline justify-center">
         <Link href="/about">About</Link></div>
-         <div className="bg-yellow border border-black vertical-middle p-3 py-4 text-[18px] rounded-tr-[15px]">
+         <div className="bg-yellow border border-black vertical-middle p-1 py-4 text-[16px] leading-none items-baseline justify-center rounded-tr-[15px]">
         <Link href="https://smmstudio.ca/">Studio</Link></div>
         
 
