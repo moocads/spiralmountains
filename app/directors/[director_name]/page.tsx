@@ -164,7 +164,7 @@ export default function DirectorDetailPage({ params }: { params: { director_name
       </Link>
 
       <div className="mt-8 grid max-w-6xl gap-10 lg:grid-cols-[360px_1fr]">
-        <div className="sticky top-0 aspect-[3/4] w-full max-w-[360px] overflow-hidden bg-[#111111] rounded-3xl">
+        <div className="relative md:sticky top-0 aspect-[3/4] w-full max-w-[360px] overflow-hidden bg-[#111111] rounded-3xl">
           <Image
             src={director.director_photo?.url || "/placeholder-user.jpg"}
             alt={director.Name}
