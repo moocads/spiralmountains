@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react"
 
 import { Button } from "@/app/components/ui/button"
 import { VideoPlayer } from "@/app/components/video-player"
+import { strapiCmsUrl } from "@/app/lib/cms"
 
 interface Project {
   id: number;
@@ -93,7 +94,7 @@ export default function Works() {
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const response = await fetch('https://smm-cms-bc62f0c8a130.herokuapp.com/api/smm-works-plural?populate=*');
+        const response = await fetch(strapiCmsUrl("smm-works-plural"));
         if (!response.ok) {
           throw new Error('Failed to fetch projects');
         }

@@ -7,6 +7,7 @@ import { motion } from "framer-motion"
 
 import { Button } from "@/app/components/ui/button"
 import { VideoPlayer } from "@/app/components/video-player"
+import { strapiCmsUrl } from "@/app/lib/cms"
 
 interface Project {
   id: number;
@@ -116,7 +117,7 @@ export default function MotionGraphic() {
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const response = await fetch('https://smm-cms-bc62f0c8a130.herokuapp.com/api/motion-graphics?populate=*');
+        const response = await fetch(strapiCmsUrl("motion-graphics"));
         if (!response.ok) {
           throw new Error('Failed to fetch projects');
         }

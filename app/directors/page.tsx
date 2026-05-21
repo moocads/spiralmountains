@@ -3,6 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { strapiCmsUrl } from "@/app/lib/cms"
 
 interface DirectorWork {
   id: number
@@ -30,7 +31,7 @@ export default function DirectorsPage() {
   useEffect(() => {
     async function fetchDirectors() {
       try {
-        const response = await fetch("https://smm-cms-bc62f0c8a130.herokuapp.com/api/director?populate=*")
+        const response = await fetch(strapiCmsUrl("director"))
         if (!response.ok) {
           throw new Error("Failed to fetch directors")
         }

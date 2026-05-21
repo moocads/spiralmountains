@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { strapiCmsUrl } from "@/app/lib/cms";
 
 // Add this interface for type safety
 interface TeamMember {
@@ -33,8 +34,8 @@ export default function About() {
     async function fetchData() {
       try {
         const [teamRes, clientRes] = await Promise.all([
-          fetch('https://smm-cms-bc62f0c8a130.herokuapp.com/api/smm-teams-plural?populate=*'),
-          fetch('https://smm-cms-bc62f0c8a130.herokuapp.com/api/smm-clients-plural?populate=*')
+          fetch(strapiCmsUrl("smm-teams-plural")),
+          fetch(strapiCmsUrl("smm-clients-plural")),
         ]);
 
         if (!teamRes.ok || !clientRes.ok) {

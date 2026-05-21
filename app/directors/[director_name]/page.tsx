@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useEffect, useMemo, useState } from "react"
 import { X } from "lucide-react"
 import { VimeoPlayer } from "@/app/components/vimeo-player"
+import { strapiCmsUrl } from "@/app/lib/cms"
 
 interface DirectorWork {
   id: number
@@ -42,7 +43,7 @@ export default function DirectorDetailPage({ params }: { params: { director_name
   useEffect(() => {
     async function fetchDirector() {
       try {
-        const response = await fetch("https://smm-cms-bc62f0c8a130.herokuapp.com/api/director?populate=*")
+        const response = await fetch(strapiCmsUrl("director"))
         if (!response.ok) {
           throw new Error("Failed to fetch director details")
         }
